@@ -13,7 +13,7 @@
         <property name="hibernate.current_session_context_class">thread</property>
         <property name="hibernate.show_sql">true</property>
 
-        <mapping resource="Client.hbm.xml"/>
-        <mapping resource="Country.hbm.xml"/>
+        <mapping resource="hibernateConfiguration/Client.hbm.xml"/>
+        <mapping resource="hibernateConfiguration/Country.hbm.xml"/>
     </session-factory>
 </hibernate-configuration>

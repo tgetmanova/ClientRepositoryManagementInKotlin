@@ -12,7 +12,7 @@ public class DbSessionUtil {
     private static SessionFactory buildSessionFactory() {
         try {
             Configuration configuration = new Configuration()
-                    .configure("hibernate.cfg.xml");
+                    .configure("hibernateConfiguration/hibernate.cfg.xml");
 
             ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
                     .applySettings(configuration.getProperties())

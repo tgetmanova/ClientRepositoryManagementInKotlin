@@ -24,3 +24,19 @@ INSERT INTO Countries VALUES ('United States', 'US'), ('Russian Federation', 'RU
 
 SELECT *
 FROM Countries;
+
+
+CREATE TABLE Contacts (
+  ContactID  INT NOT NULL AUTO_INCREMENT,
+  ClientID   INT,
+  PhoneNumber VARCHAR(20),
+  Address    VARCHAR(100),
+  Email      VARCHAR(40),
+  PRIMARY KEY (ContactID),
+  FOREIGN KEY (ClientID) REFERENCES Clients (ClientID)
+);
+
+INSERT INTO Contacts (ClientID, PhoneNumber, Address, Email)
+VALUES (12, '+923123', 'fsdfsdfsadf', 'adsffdh@sadsads.test' );
+
+SELECT * FROM Contacts;
