@@ -13,7 +13,7 @@
         <property name="hibernate.current_session_context_class">thread</property>
         <property name="hibernate.show_sql">true</property>
 
-        <mapping class="com.github.spb.tget.demo.Client"/>
-        <mapping class="com.github.spb.tget.demo.Country"/>
+        <mapping class="com.github.spb.tget.demo.data.Client"/>
+        <mapping class="com.github.spb.tget.demo.data.Country"/>
     </session-factory>
 </hibernate-configuration>

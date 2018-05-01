@@ -1,4 +1,4 @@
-package com.github.spb.tget.demo;
+package com.github.spb.tget.demo.data;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;

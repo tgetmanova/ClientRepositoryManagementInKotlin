@@ -1,4 +1,6 @@
-package com.github.spb.tget.demo;
+package com.github.spb.tget.demo.data;
+
+import com.github.spb.tget.demo.util.RandomUtils;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,7 +17,7 @@ public class Client {
 
     @Id
     @GeneratedValue
-    @Column(name="ClientID")
+    @Column(name = "ClientID")
     private int clientId;
 
     @Column(name = "FirstName")
@@ -32,5 +34,22 @@ public class Client {
 
     public String getFirstName() {
         return firstName;
+    }
+
+
+    public Client withFirstName(String firstName) {
+        this.firstName = firstName;
+        return this;
+    }
+
+    public Client withLastName(String lastName) {
+        this.lastName = lastName;
+        return this;
+    }
+
+    public static Client random() {
+        return new Client()
+                .withFirstName(RandomUtils.getRandomAlphabetic(15))
+                .withLastName(RandomUtils.getRandomAlphabetic(15));
     }
 }

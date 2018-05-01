@@ -1,4 +1,4 @@
-package com.github.spb.tget.demo;
+package com.github.spb.tget.demo.util;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
@@ -31,6 +31,14 @@ public class DbSessionUtil {
             sessionFactory = buildSessionFactory();
         }
         return sessionFactory;
+    }
+
+    public static void closeSession(){
+        if (sessionFactory == null) {
+            return;
+        }
+        sessionFactory.close();
+        sessionFactory = null;
     }
 
 }
