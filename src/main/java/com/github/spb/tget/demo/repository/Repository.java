@@ -6,7 +6,7 @@ public interface Repository<T> {
 
     List<T> getItems();
 
-    int addItem(T item);
+    void addItem(T item);
 
     void updateItem(T item);
 

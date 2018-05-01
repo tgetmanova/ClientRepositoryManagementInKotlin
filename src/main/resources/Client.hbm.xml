@@ -1,0 +1,22 @@
+<?xml version = "1.0" encoding = "utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name = "com.github.spb.tget.demo.data.Client" table = "Clients">
+
+        <meta attribute = "class-description">
+            This class contains the Client detail.
+        </meta>
+
+        <id name = "clientId" type = "int" column = "ClientID">
+        </id>
+
+        <property name = "firstName" column = "FirstName" type = "string"/>
+        <property name = "lastName" column = "LastName" type = "string"/>
+        <property name = "middleName" column = "MiddleName" type = "string"/>
+        <property name = "dateOfBirth" column = "DateOfBirth" type = "timestamp"/>
+
+    </class>
+</hibernate-mapping>

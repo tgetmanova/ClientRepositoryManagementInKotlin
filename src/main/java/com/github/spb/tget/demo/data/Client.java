@@ -2,35 +2,49 @@ package com.github.spb.tget.demo.data;
 
 import com.github.spb.tget.demo.util.RandomUtils;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.Column;
-
-@Entity
-@Table(name = "Clients")
 public class Client {
 
-    public Client() {
+    private int clientId;
+    private String firstName;
+    private String lastName;
+    private String middleName;
+    private String dateOfBirth;
+
+    public int getClientId() {
+        return clientId;
     }
 
-    @Id
-    @GeneratedValue
-    @Column(name = "ClientID")
-    private int clientId;
+    public void setClientId(int clientId) {
+        this.clientId = clientId;
+    }
 
-    @Column(name = "FirstName")
-    private String firstName;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
 
-    @Column(name = "LastName")
-    private String lastName;
+    public String getLastName() {
+        return lastName;
+    }
 
-    @Column(name = "MiddleName")
-    private String middleName;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
 
-    @Column(name = "DateOfBirth")
-    private String dateOfBirth;
+    public String getMiddleName() {
+        return middleName;
+    }
+
+    public void setMiddleName(String middleName) {
+        this.middleName = middleName;
+    }
+
+    public String getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public void setDateOfBirth(String dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
 
     public String getFirstName() {
         return firstName;

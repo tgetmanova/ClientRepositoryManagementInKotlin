@@ -4,12 +4,13 @@ import com.github.spb.tget.demo.data.Client;
 import com.github.spb.tget.demo.repository.ClientDbRepository;
 import com.github.spb.tget.demo.repository.Repository;
 
+import java.util.List;
+
 public class Main {
 
     public static void main(String[] args) {
         Repository repository = ClientDbRepository.create();
-        Client client = Client.random();
-        repository.addItem(client);
-        repository.getItems();
+        repository.updateItem(((Client)repository.getItems().get(0)).withFirstName("hyhyhyyy"));
+        List<Client> c = repository.getItems();
     }
 }

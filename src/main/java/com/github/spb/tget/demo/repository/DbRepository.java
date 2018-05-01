@@ -32,12 +32,11 @@ public class DbRepository<T> implements Repository {
     }
 
     @Override
-    public int addItem(Object item) {
+    public void addItem(Object item) {
         Session session = DbSessionUtil.getSessionFactory().getCurrentSession();
         Transaction transaction = session.beginTransaction();
-        int id = -1;
         try {
-            id = (Integer) session.save(item);
+            session.save(item);
             transaction.commit();
         } catch (Throwable exception) {
             if (transaction != null) {
@@ -47,8 +46,6 @@ public class DbRepository<T> implements Repository {
         } finally {
             DbSessionUtil.closeSession();
         }
-
-        return id;
     }
 
     @Override
