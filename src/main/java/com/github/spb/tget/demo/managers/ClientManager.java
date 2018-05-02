@@ -36,6 +36,20 @@ public class ClientManager {
         return client;
     }
 
+    public Client createClient(Client client) {
+        int clientId = this.clientDao.addItemAndGetId(client);
+        client.setClientId(clientId);
+
+        if (client.getContactInformation() != null && !client.getContactInformation().isEmpty()) {
+            client.getContactInformation().forEach(conInfo -> {
+                conInfo.setClient(client);
+                this.contactInformationDao.addItem(conInfo);
+            });
+        }
+
+        return client;
+    }
+
     public void deleteClient(Client client) {
         this.clientDao.deleteItem(client);
     }
