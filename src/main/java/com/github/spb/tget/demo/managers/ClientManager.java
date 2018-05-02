@@ -5,7 +5,9 @@ import com.github.spb.tget.demo.data.ContactInformation;
 import com.github.spb.tget.demo.repository.dao.ClientDao;
 import com.github.spb.tget.demo.repository.dao.ContactInformationDao;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class ClientManager {
 
@@ -23,15 +25,18 @@ public class ClientManager {
         return client;
     }
 
-    public Client createRandomClientWithContactInformation() {
+    public Client createRandomClientWithContactInformation2() {
         Client client = Client.random();
-        ContactInformation conInfo = ContactInformation.random();
+        Set<ContactInformation> conInfo = new HashSet<>();
+        conInfo.add(ContactInformation.random());
+        client.setContactInformation(conInfo);
 
-        int clientId = this.clientDao.addItemAndGetId(client);
-        client.setClientId(clientId);
+        this.clientDao.addItem(client);
 
-        conInfo.setClient(client);
-        this.contactInformationDao.addItem(conInfo);
+        conInfo.forEach(ci -> {
+            ci.setClient(client);
+            this.contactInformationDao.addItem(ci);
+        });
 
         return client;
     }

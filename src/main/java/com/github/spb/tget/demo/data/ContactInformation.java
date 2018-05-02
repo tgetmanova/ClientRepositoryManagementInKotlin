@@ -25,7 +25,7 @@ public class ContactInformation {
     public void setContactId(int contactId) {
         this.contactId = contactId;
     }
-    
+
     public String getPhone() {
         return phone;
     }
@@ -72,5 +72,32 @@ public class ContactInformation {
                 .withPhone(String.format("+%s-%s",
                         RandomUtils.getRandomNumeric(3),
                         RandomUtils.getRandomNumeric(10)));
+    }
+
+    @Override
+    public String toString() {
+        return String.format("ContactID: [%d],  Address: %s, Phone: %s, Email: %s",
+                getContactId(), getAddress(), getPhone(), getEmail());
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == null) {
+            return false;
+        }
+        if (other == this) {
+            return true;
+        }
+        if (!(other instanceof ContactInformation)) {
+            return false;
+        }
+
+        ContactInformation otherContact = (ContactInformation) other;
+        if (this.getContactId() > 0 && otherContact.getContactId() > 0) {
+            return this.getContactId() == otherContact.getContactId();
+        }
+        return (this.getAddress() != null && this.getAddress().equals(otherContact.getAddress()))
+                && (this.getPhone() != null && this.getPhone().equals(otherContact.getPhone()))
+                && (this.getEmail() != null && this.getEmail().equals(otherContact.getEmail()));
     }
 }

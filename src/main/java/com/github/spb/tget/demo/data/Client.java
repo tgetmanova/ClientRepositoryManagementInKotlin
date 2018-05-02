@@ -100,7 +100,34 @@ public class Client {
         return this;
     }
 
-    public String prettyPrint() {
+    @Override
+    public String toString() {
         return String.format("ClientID: [%d] %s %s", getClientId(), getFirstName(), getLastName());
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == null) {
+            return false;
+        }
+        if (other == this) {
+            return true;
+        }
+        if (!(other instanceof Client)) {
+            return false;
+        }
+
+        Client otherClient = (Client) other;
+        if (this.getClientId() > 0 && otherClient.getClientId() > 0) {
+            return this.clientId == otherClient.getClientId();
+        }
+        return (this.getFirstName() != null && this.getFirstName().equals(otherClient.getFirstName()))
+                && (this.getLastName() != null && this.getLastName().equals(otherClient.getLastName()))
+                && (this.getMiddleName() != null && this.getMiddleName().equals(otherClient.getMiddleName()));
+    }
+
+    public Client withContactInformation(Set<ContactInformation> contactInformation) {
+        this.contactInformation = contactInformation;
+        return this;
     }
 }

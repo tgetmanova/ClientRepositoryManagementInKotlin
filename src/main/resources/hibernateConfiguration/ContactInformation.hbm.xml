@@ -12,6 +12,7 @@
         </meta>
 
         <id name="contactId" type="int" column="ContactID">
+            <generator class="native"/>
         </id>
 
         <property name="phone" column="PhoneNumber" type="string"/>
