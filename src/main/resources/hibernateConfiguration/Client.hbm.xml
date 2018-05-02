@@ -18,7 +18,7 @@
         <property name="firstName" column="FirstName" type="string"/>
         <property name="lastName" column="LastName" type="string"/>
         <property name="middleName" column="MiddleName" type="string"/>
-        <property name="dateOfBirth" column="DateOfBirth" type="timestamp"/>
+        <property name="dateOfBirth" column="DateOfBirth" type="java.sql.Date"/>
 
         <set name="contactInformation" table="Contacts"
              inverse="true" lazy="false" fetch="select"

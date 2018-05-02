@@ -89,8 +89,8 @@ public class Client {
         return new Client()
                 .withFirstName(RandomUtils.getRandomAlphabetic(15))
                 .withLastName(RandomUtils.getRandomAlphabetic(15))
-                .withMiddleName(RandomUtils.getRandomAlpanumeric(15));
-        // .withDateOfBirth(Date.valueOf(RandomUtils.randomDateOfBirthAsAdult().toLocalDate()));
+                .withMiddleName(RandomUtils.getRandomAlpanumeric(15))
+                .withDateOfBirth(Date.valueOf(RandomUtils.randomDateOfBirthAsAdult().toLocalDate()));
     }
 
     public Client withRandomContactInformation() {
