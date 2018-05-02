@@ -20,7 +20,8 @@
         <property name = "dateOfBirth" column = "DateOfBirth" type = "timestamp"/>
 
         <set name="contactInformation" table="Contacts"
-             inverse="true" lazy="false" fetch="select">
+             inverse="true" lazy="false" fetch="select"
+             cascade="delete">
             <key>
                 <column name="ClientID" not-null="true" />
             </key>
