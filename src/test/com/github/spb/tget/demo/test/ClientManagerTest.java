@@ -5,8 +5,10 @@ import com.github.spb.tget.demo.data.ContactInformation;
 import com.github.spb.tget.demo.managers.ClientManager;
 import com.github.spb.tget.demo.managers.ContactManager;
 import com.github.spb.tget.demo.util.RandomUtils;
+
 import org.assertj.core.api.Assertions;
 import org.assertj.core.api.SoftAssertions;
+
 import org.testng.annotations.Test;
 
 import java.util.HashSet;
@@ -167,7 +169,7 @@ public class ClientManagerTest {
 
         assertions.assertAll();
 
-      //  clientManager.deleteClient(client);
+        clientManager.deleteClient(client);
 
         List<Client> updatedClients = clientManager.getClients();
         List<ContactInformation> updatedContacts = contactManager.getAllContacts();

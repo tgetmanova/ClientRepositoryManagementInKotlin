@@ -3,6 +3,7 @@ package com.github.spb.tget.demo.data;
 import com.github.spb.tget.demo.util.RandomUtils;
 
 import java.sql.Date;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -100,6 +101,11 @@ public class Client {
         return this;
     }
 
+    public Client withContactInformation(Set<ContactInformation> contactInformation) {
+        this.contactInformation = contactInformation;
+        return this;
+    }
+
     @Override
     public String toString() {
         return String.format("ClientID: [%d] %s %s", getClientId(), getFirstName(), getLastName());
@@ -124,10 +130,5 @@ public class Client {
         return (this.getFirstName() != null && this.getFirstName().equals(otherClient.getFirstName()))
                 && (this.getLastName() != null && this.getLastName().equals(otherClient.getLastName()))
                 && (this.getMiddleName() != null && this.getMiddleName().equals(otherClient.getMiddleName()));
-    }
-
-    public Client withContactInformation(Set<ContactInformation> contactInformation) {
-        this.contactInformation = contactInformation;
-        return this;
     }
 }
