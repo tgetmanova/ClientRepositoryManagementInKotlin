@@ -48,6 +48,24 @@ public class DbRepository<T> implements Repository {
         }
     }
 
+    public int addItemAndGetId(Object item) {
+        Session session = DbSessionUtil.getSessionFactory().getCurrentSession();
+        Transaction transaction = session.beginTransaction();
+        int id = -1;
+        try {
+            id = (int) session.save(item);
+            transaction.commit();
+        } catch (Throwable exception) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            throw exception;
+        } finally {
+            DbSessionUtil.closeSession();
+        }
+        return id;
+    }
+
     @Override
     public void updateItem(Object item) {
         Session session = DbSessionUtil.getSessionFactory().getCurrentSession();

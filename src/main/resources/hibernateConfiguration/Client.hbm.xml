@@ -5,27 +5,28 @@
 
 <hibernate-mapping>
 
-    <class name = "com.github.spb.tget.demo.data.Client" table = "Clients">
+    <class name="com.github.spb.tget.demo.data.Client" table="Clients">
 
-        <meta attribute = "class-description">
+        <meta attribute="class-description">
             This class contains the Client detail.
         </meta>
 
-        <id name = "clientId" type = "int" column = "ClientID">
+        <id name="clientId" type="int" column="ClientID">
+            <generator class="native"/>
         </id>
 
-        <property name = "firstName" column = "FirstName" type = "string"/>
-        <property name = "lastName" column = "LastName" type = "string"/>
-        <property name = "middleName" column = "MiddleName" type = "string"/>
-        <property name = "dateOfBirth" column = "DateOfBirth" type = "timestamp"/>
+        <property name="firstName" column="FirstName" type="string"/>
+        <property name="lastName" column="LastName" type="string"/>
+        <property name="middleName" column="MiddleName" type="string"/>
+        <property name="dateOfBirth" column="DateOfBirth" type="timestamp"/>
 
         <set name="contactInformation" table="Contacts"
              inverse="true" lazy="false" fetch="select"
              cascade="delete">
             <key>
-                <column name="ClientID" not-null="true" />
+                <column name="ClientID" not-null="true"/>
             </key>
-            <one-to-many class="com.github.spb.tget.demo.data.ContactInformation" />
+            <one-to-many class="com.github.spb.tget.demo.data.ContactInformation"/>
         </set>
 
     </class>

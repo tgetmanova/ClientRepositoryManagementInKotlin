@@ -4,16 +4,16 @@
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping>
-    <class name = "com.github.spb.tget.demo.data.Country" table = "Countries">
+    <class name="com.github.spb.tget.demo.data.Country" table="Countries">
 
-        <meta attribute = "class-description">
+        <meta attribute="class-description">
             This class contains the Countries detail.
         </meta>
 
-        <id name = "code" type = "string" column = "Code">
+        <id name="code" type="string" column="Code">
         </id>
 
-        <property name = "name" column = "Name" type = "string"/>
+        <property name="name" column="Name" type="string"/>
 
     </class>
 </hibernate-mapping>

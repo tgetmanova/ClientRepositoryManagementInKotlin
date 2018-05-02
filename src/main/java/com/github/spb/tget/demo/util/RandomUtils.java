@@ -1,5 +1,7 @@
 package com.github.spb.tget.demo.util;
 
+import java.time.LocalDateTime;
+
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -34,24 +36,33 @@ public class RandomUtils {
         return stringBuilder.toString();
     }
 
-    public static String getRandomString(int charactersCount){
+    public static String getRandomString(int charactersCount) {
         return generateRandomString(charactersCount, ALL_CHARS);
     }
 
-    public static String getRandomAlpanumeric(int charactersCount){
+    public static String getRandomAlpanumeric(int charactersCount) {
         return generateRandomString(charactersCount, ALPHABETIC.concat(NUMERIC));
     }
 
-    public static String getRandomAlphabetic(int charactersCount){
+    public static String getRandomAlphabetic(int charactersCount) {
         return generateRandomString(charactersCount, ALPHABETIC);
     }
 
-    public static String getRandomNumeric(int charactersCount){
+    public static String getRandomNumeric(int charactersCount) {
         return generateRandomString(charactersCount, NUMERIC);
     }
 
     public static Object getRandomElement(Collection collection) {
         int i = random.nextInt(collection.size());
         return collection.toArray()[i];
+    }
+
+    public static LocalDateTime randomDateOfBirthAsAdult() {
+        return LocalDateTime.now().minusYears(18);
+    }
+
+    public static String getRandomEmailAddress() {
+        return String.format("%s@%s.test",
+                getRandomAlpanumeric(15), getRandomAlpanumeric(10));
     }
 }

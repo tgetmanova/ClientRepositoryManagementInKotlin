@@ -2,6 +2,8 @@ package com.github.spb.tget.demo.data;
 
 import com.github.spb.tget.demo.util.RandomUtils;
 
+import java.sql.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 public class Client {
@@ -10,7 +12,7 @@ public class Client {
     private String firstName;
     private String lastName;
     private String middleName;
-    private String dateOfBirth;
+    private Date dateOfBirth;
     private Set<ContactInformation> contactInformation;
 
     public int getClientId() {
@@ -41,11 +43,11 @@ public class Client {
         this.middleName = middleName;
     }
 
-    public String getDateOfBirth() {
+    public Date getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(String dateOfBirth) {
+    public void setDateOfBirth(Date dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 
@@ -72,9 +74,33 @@ public class Client {
         return this;
     }
 
+    public Client withMiddleName(String middleName) {
+        this.middleName = middleName;
+        return this;
+    }
+
+    public Client withDateOfBirth(Date dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+        return this;
+    }
+
     public static Client random() {
         return new Client()
                 .withFirstName(RandomUtils.getRandomAlphabetic(15))
-                .withLastName(RandomUtils.getRandomAlphabetic(15));
+                .withLastName(RandomUtils.getRandomAlphabetic(15))
+                .withMiddleName(RandomUtils.getRandomAlpanumeric(15));
+        // .withDateOfBirth(Date.valueOf(RandomUtils.randomDateOfBirthAsAdult().toLocalDate()));
+    }
+
+    public Client withRandomContactInformation() {
+        this.contactInformation = new HashSet<>();
+        ContactInformation contactInfo = ContactInformation.random();
+        this.contactInformation.add(contactInfo);
+        contactInfo.setClient(this);
+        return this;
+    }
+
+    public String prettyPrint() {
+        return String.format("ClientID: [%d] %s %s", getClientId(), getFirstName(), getLastName());
     }
 }

@@ -5,21 +5,21 @@
 
 <hibernate-mapping>
 
-    <class name = "com.github.spb.tget.demo.data.ContactInformation" table = "Contacts">
+    <class name="com.github.spb.tget.demo.data.ContactInformation" table="Contacts">
 
-        <meta attribute = "class-description">
+        <meta attribute="class-description">
             This class contains the Contacts detail.
         </meta>
 
-        <id name = "contactId" type = "int" column = "ContactID">
+        <id name="contactId" type="int" column="ContactID">
         </id>
 
-        <property name = "phone" column = "PhoneNumber" type = "string"/>
-        <property name = "email" column = "Email" type = "string"/>
-        <property name = "address" column = "Address" type = "string"/>
+        <property name="phone" column="PhoneNumber" type="string"/>
+        <property name="email" column="Email" type="string"/>
+        <property name="address" column="Address" type="string"/>
 
         <many-to-one name="client" class="com.github.spb.tget.demo.data.Client" fetch="select">
-            <column name="ClientID" not-null="true" />
+            <column name="ClientID" not-null="true"/>
         </many-to-one>
 
     </class>

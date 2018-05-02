@@ -1,5 +1,7 @@
 package com.github.spb.tget.demo.data;
 
+import com.github.spb.tget.demo.util.RandomUtils;
+
 public class ContactInformation {
 
     private Client client;
@@ -46,5 +48,29 @@ public class ContactInformation {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public ContactInformation withEmail(String email) {
+        this.email = email;
+        return this;
+    }
+
+    public ContactInformation withPhone(String phone) {
+        this.phone = phone;
+        return this;
+    }
+
+    public ContactInformation withAddress(String address) {
+        this.address = address;
+        return this;
+    }
+
+    public static ContactInformation random() {
+        return new ContactInformation()
+                .withAddress(RandomUtils.getRandomAlpanumeric(40))
+                .withEmail(RandomUtils.getRandomEmailAddress())
+                .withPhone(String.format("+%s-%s",
+                        RandomUtils.getRandomNumeric(3),
+                        RandomUtils.getRandomNumeric(10)));
     }
 }
