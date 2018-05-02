@@ -4,6 +4,7 @@
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping>
+
     <class name = "com.github.spb.tget.demo.data.Client" table = "Clients">
 
         <meta attribute = "class-description">
@@ -18,5 +19,14 @@
         <property name = "middleName" column = "MiddleName" type = "string"/>
         <property name = "dateOfBirth" column = "DateOfBirth" type = "timestamp"/>
 
+        <set name="contactInformation" table="Contacts"
+             inverse="true" lazy="false" fetch="select">
+            <key>
+                <column name="ClientID" not-null="true" />
+            </key>
+            <one-to-many class="com.github.spb.tget.demo.data.ContactInformation" />
+        </set>
+
     </class>
+
 </hibernate-mapping>

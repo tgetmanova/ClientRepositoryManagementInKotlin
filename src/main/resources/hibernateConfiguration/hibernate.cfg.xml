@@ -15,5 +15,6 @@
 
         <mapping resource="hibernateConfiguration/Client.hbm.xml"/>
         <mapping resource="hibernateConfiguration/Country.hbm.xml"/>
+        <mapping resource="hibernateConfiguration/ContactInformation.hbm.xml"/>
     </session-factory>
 </hibernate-configuration>

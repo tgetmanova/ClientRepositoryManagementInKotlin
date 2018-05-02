@@ -2,6 +2,8 @@ package com.github.spb.tget.demo.data;
 
 import com.github.spb.tget.demo.util.RandomUtils;
 
+import java.util.Set;
+
 public class Client {
 
     private int clientId;
@@ -9,6 +11,7 @@ public class Client {
     private String lastName;
     private String middleName;
     private String dateOfBirth;
+    private Set<ContactInformation> contactInformation;
 
     public int getClientId() {
         return clientId;
@@ -50,6 +53,14 @@ public class Client {
         return firstName;
     }
 
+
+    public Set<ContactInformation> getContactInformation() {
+        return contactInformation;
+    }
+
+    public void setContactInformation(Set<ContactInformation> contactInformation) {
+        this.contactInformation = contactInformation;
+    }
 
     public Client withFirstName(String firstName) {
         this.firstName = firstName;
