@@ -1,27 +1,27 @@
-package com.github.spb.tget.demo.managers;
+package com.github.spb.tget.demo.dao;
 
 import com.github.spb.tget.demo.data.Client;
 import com.github.spb.tget.demo.data.ContactInformation;
-import com.github.spb.tget.demo.repository.dao.ClientDao;
-import com.github.spb.tget.demo.repository.dao.ContactInformationDao;
+import com.github.spb.tget.demo.repository.dbRepository.ClientDbRepository;
+import com.github.spb.tget.demo.repository.dbRepository.ContactInformationDbRepository;
 
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class ClientManager {
+public class ClientDao {
 
-    private ClientDao clientDao;
-    private ContactInformationDao contactInformationDao;
+    private ClientDbRepository clientDbRepository;
+    private ContactInformationDbRepository contactInformationDbRepository;
 
-    public ClientManager() {
-        this.clientDao = ClientDao.create();
-        this.contactInformationDao = ContactInformationDao.create();
+    public ClientDao() {
+        this.clientDbRepository = ClientDbRepository.create();
+        this.contactInformationDbRepository = ContactInformationDbRepository.create();
     }
 
     public Client createRandomClient() {
         Client client = Client.random();
-        this.clientDao.addItem(client);
+        this.clientDbRepository.addItem(client);
         return client;
     }
 
@@ -31,24 +31,24 @@ public class ClientManager {
         conInfo.add(ContactInformation.random());
         client.setContactInformation(conInfo);
 
-        this.clientDao.addItem(client);
+        this.clientDbRepository.addItem(client);
 
         conInfo.forEach(ci -> {
             ci.setClient(client);
-            this.contactInformationDao.addItem(ci);
+            this.contactInformationDbRepository.addItem(ci);
         });
 
         return client;
     }
 
     public Client createClient(Client client) {
-        int clientId = this.clientDao.addItemAndGetId(client);
+        int clientId = this.clientDbRepository.addItemAndGetId(client);
         client.setClientId(clientId);
 
         if (client.getContactInformation() != null && !client.getContactInformation().isEmpty()) {
             client.getContactInformation().forEach(conInfo -> {
                 conInfo.setClient(client);
-                this.contactInformationDao.addItem(conInfo);
+                this.contactInformationDbRepository.addItem(conInfo);
             });
         }
 
@@ -56,11 +56,11 @@ public class ClientManager {
     }
 
     public void deleteClient(Client client) {
-        this.clientDao.deleteItem(client);
+        this.clientDbRepository.deleteItem(client);
     }
 
     public List<Client> getClients() {
-        return this.clientDao.getItems();
+        return this.clientDbRepository.getItems();
     }
 
     public Client resolveClient(int clientId) {
@@ -71,6 +71,6 @@ public class ClientManager {
     }
 
     public void updateClient(Client updatedClient) {
-        this.clientDao.updateItem(updatedClient);
+        this.clientDbRepository.updateItem(updatedClient);
     }
 }
