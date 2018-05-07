@@ -3,7 +3,7 @@ package com.github.spb.tget.demo.dto;
 public class ContactInformationDto {
 
     private String emailAddress;
-    private PhoneDto phoneNumber;
+    private PhoneDto phone;
     private AddressDto address;
 
     public String getEmailAddress() {
@@ -14,12 +14,12 @@ public class ContactInformationDto {
         this.emailAddress = emailAddress;
     }
 
-    public PhoneDto getPhoneNumber() {
-        return phoneNumber;
+    public PhoneDto getPhone() {
+        return phone;
     }
 
-    public void setPhoneNumber(PhoneDto phoneNumber) {
-        this.phoneNumber = phoneNumber;
+    public void setPhone(PhoneDto phone) {
+        this.phone = phone;
     }
 
     public AddressDto getAddress() {
