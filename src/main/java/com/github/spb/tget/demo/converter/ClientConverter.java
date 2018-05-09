@@ -15,6 +15,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import static com.github.spb.tget.demo.util.CommonUtils.getSubstringBetweenOrToEnd;
+
 public class ClientConverter {
 
     public Client fromDto(ClientDto clientDto) {
@@ -47,17 +49,17 @@ public class ClientConverter {
                 if (contact.getAddress() != null) {
                     List<String> addressParts = new ArrayList<>();
                     AddressDto addressDto = contact.getAddress();
-                    if (!StringUtils.isBlank(addressDto.getCountry())) {
-                        addressParts.add(addressDto.getCountry());
-                    }
-                    if (!StringUtils.isBlank(addressDto.getState())) {
-                        addressParts.add(addressDto.getState());
+                    if (!StringUtils.isBlank(addressDto.getAddressLine())) {
+                        addressParts.add(String.format("Street address: %s", addressDto.getAddressLine()));
                     }
                     if (!StringUtils.isBlank(addressDto.getPostalCode())) {
-                        addressParts.add(addressDto.getPostalCode());
+                        addressParts.add(String.format("Postal code: %s", addressDto.getPostalCode()));
                     }
-                    if (!StringUtils.isBlank(addressDto.getAddressLine())) {
-                        addressParts.add(addressDto.getAddressLine());
+                    if (!StringUtils.isBlank(addressDto.getCountry())) {
+                        addressParts.add(String.format("Country: %s", addressDto.getCountry()));
+                    }
+                    if (!StringUtils.isBlank(addressDto.getState())) {
+                        addressParts.add(String.format("State: %s", addressDto.getState()));
                     }
                     contactInfo.setAddress(String.join("; ", addressParts));
                 }
@@ -85,29 +87,42 @@ public class ClientConverter {
         clientDto.setMiddleName(client.getMiddleName());
         clientDto.setDateOfBirth(client.getDateOfBirth() == null
                 ? null : client.getDateOfBirth().toLocalDate().atStartOfDay());
+
         List<ContactInformationDto> contactInformationDtos = new ArrayList<>();
 
         client.getContactInformation().forEach(ci -> {
             ContactInformationDto contactInformationDto = new ContactInformationDto();
-
             contactInformationDto.setEmailAddress(ci.getEmail());
-            // TODO
-            contactInformationDto.setAddress(null);
+            contactInformationDto.setAddress(addressToDto(ci.getAddress()));
+            contactInformationDto.setPhone(phoneToDto(ci.getPhone()));
 
-            PhoneDto phoneDto = new PhoneDto();
-            phoneDto.setCountryCode(Integer.parseInt(
-                    StringUtils.substringBetween(ci.getPhone(), "+", "-")));
-            if (phoneDto.getExtension() != null) {
-                phoneDto.setPhoneNumber(StringUtils.substringBetween(ci.getPhone(), "-", " ext."));
-                phoneDto.setExtension(Integer.parseInt(StringUtils.substringAfter(ci.getPhone(), " ext. ")));
-            } else {
-                phoneDto.setPhoneNumber(StringUtils.substringAfter(ci.getPhone(), "-"));
-            }
-            contactInformationDto.setPhone(phoneDto);
             contactInformationDtos.add(contactInformationDto);
         });
 
         clientDto.setContacts(contactInformationDtos);
         return clientDto;
+    }
+
+    private AddressDto addressToDto(String address) {
+        AddressDto addressDto = new AddressDto();
+        addressDto.setCountry(getSubstringBetweenOrToEnd(address, "Country: ", ";"));
+        addressDto.setState(getSubstringBetweenOrToEnd(address, "State: ", ";"));
+        addressDto.setAddressLine(getSubstringBetweenOrToEnd(address, "Street address: ", ";"));
+        addressDto.setPostalCode(getSubstringBetweenOrToEnd(address, "Postal code: ", ";"));
+
+        return addressDto;
+    }
+
+    private PhoneDto phoneToDto(String phone) {
+        PhoneDto phoneDto = new PhoneDto();
+        phoneDto.setCountryCode(Integer.parseInt(
+                StringUtils.substringBetween(phone, "+", "-")));
+        if (phone.contains("ext.")) {
+            phoneDto.setPhoneNumber(StringUtils.substringBetween(phone, "-", "ext.").trim());
+            phoneDto.setExtension(Integer.parseInt(StringUtils.substringAfter(phone, "ext.").trim()));
+        } else {
+            phoneDto.setPhoneNumber(StringUtils.substringAfter(phone, "-"));
+        }
+        return phoneDto;
     }
 }
