@@ -20,6 +20,7 @@ public class ClientConverter {
     public Client fromDto(ClientDto clientDto) {
         Client client = new Client();
 
+        client.setClientId(clientDto.getId());
         client.setFirstName(clientDto.getFirstName());
         client.setLastName(clientDto.getLastName());
         client.setMiddleName(clientDto.getMiddleName());
@@ -78,10 +79,12 @@ public class ClientConverter {
     public ClientDto toDto(Client client) {
         ClientDto clientDto = new ClientDto();
 
+        clientDto.setId(client.getClientId());
         clientDto.setFirstName(client.getFirstName());
         clientDto.setLastName(client.getLastName());
         clientDto.setMiddleName(client.getMiddleName());
-        clientDto.setDateOfBirth(client.getDateOfBirth().toLocalDate().atStartOfDay());
+        clientDto.setDateOfBirth(client.getDateOfBirth() == null
+                ? null : client.getDateOfBirth().toLocalDate().atStartOfDay());
         List<ContactInformationDto> contactInformationDtos = new ArrayList<>();
 
         client.getContactInformation().forEach(ci -> {
