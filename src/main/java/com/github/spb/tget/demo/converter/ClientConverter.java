@@ -32,38 +32,7 @@ public class ClientConverter {
 
         if (clientDto.getContacts() != null && !clientDto.getContacts().isEmpty()) {
             clientDto.getContacts().forEach(contact -> {
-                ContactInformation contactInfo = new ContactInformation();
-
-                contactInfo.setEmail(contact.getEmailAddress());
-
-                if (contact.getPhone() != null) {
-                    String phone = String.format("+%d-%s",
-                            contact.getPhone().getCountryCode(),
-                            contact.getPhone().getPhoneNumber());
-                    if (contact.getPhone().getExtension() != null) {
-                        phone += String.format(" ext. %d", contact.getPhone().getExtension());
-                    }
-                    contactInfo.setPhone(phone);
-                }
-
-                if (contact.getAddress() != null) {
-                    List<String> addressParts = new ArrayList<>();
-                    AddressDto addressDto = contact.getAddress();
-                    if (!StringUtils.isBlank(addressDto.getAddressLine())) {
-                        addressParts.add(String.format("Street address: %s", addressDto.getAddressLine()));
-                    }
-                    if (!StringUtils.isBlank(addressDto.getPostalCode())) {
-                        addressParts.add(String.format("Postal code: %s", addressDto.getPostalCode()));
-                    }
-                    if (!StringUtils.isBlank(addressDto.getCountry())) {
-                        addressParts.add(String.format("Country: %s", addressDto.getCountry()));
-                    }
-                    if (!StringUtils.isBlank(addressDto.getState())) {
-                        addressParts.add(String.format("State: %s", addressDto.getState()));
-                    }
-                    contactInfo.setAddress(String.join("; ", addressParts));
-                }
-
+                ContactInformation contactInfo = contactInfoFromDto(contact);
                 if (!StringUtils.isAllBlank(contactInfo.getAddress(),
                         contactInfo.getEmail(), contactInfo.getPhone())) {
                     contactInfoSet.add(contactInfo);
@@ -91,16 +60,20 @@ public class ClientConverter {
         List<ContactInformationDto> contactInformationDtos = new ArrayList<>();
 
         client.getContactInformation().forEach(ci -> {
-            ContactInformationDto contactInformationDto = new ContactInformationDto();
-            contactInformationDto.setEmailAddress(ci.getEmail());
-            contactInformationDto.setAddress(addressToDto(ci.getAddress()));
-            contactInformationDto.setPhone(phoneToDto(ci.getPhone()));
-
+            ContactInformationDto contactInformationDto = contactInfoToDto(ci);
             contactInformationDtos.add(contactInformationDto);
         });
 
         clientDto.setContacts(contactInformationDtos);
         return clientDto;
+    }
+
+    public ContactInformationDto contactInfoToDto(ContactInformation contactInformation) {
+        ContactInformationDto contactInformationDto = new ContactInformationDto();
+        contactInformationDto.setEmailAddress(contactInformation.getEmail());
+        contactInformationDto.setAddress(addressToDto(contactInformation.getAddress()));
+        contactInformationDto.setPhone(phoneToDto(contactInformation.getPhone()));
+        return contactInformationDto;
     }
 
     private AddressDto addressToDto(String address) {
@@ -124,5 +97,41 @@ public class ClientConverter {
             phoneDto.setPhoneNumber(StringUtils.substringAfter(phone, "-"));
         }
         return phoneDto;
+    }
+
+    public ContactInformation contactInfoFromDto(ContactInformationDto contactDto) {
+        ContactInformation contactInfo = new ContactInformation();
+
+        contactInfo.setEmail(contactDto.getEmailAddress());
+
+        if (contactDto.getPhone() != null) {
+            String phone = String.format("+%d-%s",
+                    contactDto.getPhone().getCountryCode(),
+                    contactDto.getPhone().getPhoneNumber());
+            if (contactDto.getPhone().getExtension() != null) {
+                phone += String.format(" ext. %d", contactDto.getPhone().getExtension());
+            }
+            contactInfo.setPhone(phone);
+        }
+
+        if (contactDto.getAddress() != null) {
+            List<String> addressParts = new ArrayList<>();
+            AddressDto addressDto = contactDto.getAddress();
+            if (!StringUtils.isBlank(addressDto.getAddressLine())) {
+                addressParts.add(String.format("Street address: %s", addressDto.getAddressLine()));
+            }
+            if (!StringUtils.isBlank(addressDto.getPostalCode())) {
+                addressParts.add(String.format("Postal code: %s", addressDto.getPostalCode()));
+            }
+            if (!StringUtils.isBlank(addressDto.getCountry())) {
+                addressParts.add(String.format("Country: %s", addressDto.getCountry()));
+            }
+            if (!StringUtils.isBlank(addressDto.getState())) {
+                addressParts.add(String.format("State: %s", addressDto.getState()));
+            }
+            contactInfo.setAddress(String.join("; ", addressParts));
+        }
+
+        return contactInfo;
     }
 }

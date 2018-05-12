@@ -2,6 +2,8 @@ package com.github.spb.tget.demo.controller;
 
 import com.github.spb.tget.demo.converter.ClientConverter;
 import com.github.spb.tget.demo.dao.ClientDao;
+import com.github.spb.tget.demo.dao.ContactDao;
+import com.github.spb.tget.demo.data.Client;
 import com.github.spb.tget.demo.dto.ClientDto;
 import com.github.spb.tget.demo.dto.ContactInformationDto;
 
@@ -18,6 +20,7 @@ import java.util.stream.Collectors;
 public class ClientController {
 
     private ClientDao clientDao = new ClientDao();
+    private ContactDao contactDao = new ContactDao();
     private ClientConverter clientConverter = new ClientConverter();
 
     @RequestMapping(value = "/clients", method = RequestMethod.GET)
@@ -40,5 +43,12 @@ public class ClientController {
     @RequestMapping(value = "/clients", method = RequestMethod.POST)
     public void createClient(@RequestBody ClientDto client) {
         clientDao.createClient(clientConverter.fromDto(client));
+    }
+
+    @RequestMapping(value = "/clients/{id}/contacts", method = RequestMethod.POST)
+    public void addContacts(@RequestBody List<ContactInformationDto> contacts, @PathVariable Integer id) {
+        Client client = clientDao.resolveClient(id);
+        contactDao.addContacts(contacts.stream().map(c -> clientConverter.contactInfoFromDto(c))
+                .collect(Collectors.toList()), client);
     }
 }
