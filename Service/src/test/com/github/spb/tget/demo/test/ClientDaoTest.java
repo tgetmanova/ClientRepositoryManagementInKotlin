@@ -9,7 +9,7 @@ import com.github.spb.tget.demo.util.RandomUtils;
 import org.assertj.core.api.Assertions;
 import org.assertj.core.api.SoftAssertions;
 
-import org.testng.annotations.Test;
+import org.junit.Test;
 
 import java.util.HashSet;
 import java.util.List;
