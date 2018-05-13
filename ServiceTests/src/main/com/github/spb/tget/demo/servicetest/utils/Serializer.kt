@@ -23,6 +23,10 @@ class Serializer {
         inline fun <reified T : Any> readResponse(response: Response): T {
             return getObjectMapper().readValue(response.asString())
         }
+
+        fun <T : Any> writeValueAsString(data: T): String {
+            return getObjectMapper().writeValueAsString(data)
+        }
     }
 
 

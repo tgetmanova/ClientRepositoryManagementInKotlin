@@ -7,12 +7,9 @@ import com.github.spb.tget.demo.data.Client;
 import com.github.spb.tget.demo.dto.ClientDto;
 import com.github.spb.tget.demo.dto.ContactInformationDto;
 
-import org.springframework.web.bind.annotation.RestController;
-
 import java.util.List;
 import java.util.stream.Collectors;
 
-@RestController
 public class ClientManager {
 
     private ClientDao clientDao = new ClientDao();
@@ -34,8 +31,8 @@ public class ClientManager {
         return clientConverter.toDto(clientDao.resolveClient(id)).getContacts();
     }
 
-    public void createClient(ClientDto client) {
-        clientDao.createClient(clientConverter.fromDto(client));
+    public ClientDto createClient(ClientDto client) {
+        return clientConverter.toDto(clientDao.createClient(clientConverter.fromDto(client)));
     }
 
     public void addContacts(List<ContactInformationDto> contacts, Integer id) {

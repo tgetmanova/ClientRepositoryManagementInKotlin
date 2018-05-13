@@ -29,7 +29,7 @@ public class ClientController {
     }
 
     @RequestMapping(value = resourceUrl, method = RequestMethod.POST)
-    public void createClient(@RequestBody ClientDto client) {
-        clientManager.createClient(client);
+    public ClientDto createClient(@RequestBody ClientDto client) {
+        return clientManager.createClient(client);
     }
 }

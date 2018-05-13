@@ -40,9 +40,7 @@ public class ClientConverter {
             });
         }
 
-        if (!contactInfoSet.isEmpty()) {
-            client.setContactInformation(contactInfoSet);
-        }
+        client.setContactInformation(contactInfoSet);
 
         return client;
     }
