@@ -1,5 +1,7 @@
 package com.github.spb.tget.demo.servicetest.data
 
+import com.github.spb.tget.demo.servicetest.utils.RandomUtil
+
 import java.time.LocalDateTime
 
 data class ClientDTO(
@@ -38,7 +40,8 @@ data class ClientDTO(
 
 fun ClientDTO.random(): ClientDTO {
     this.dateOfBirth = LocalDateTime.now()
-    this.firstName = "todoRandom"
-    this.lastName = "todoRandom"
+    this.firstName = RandomUtil.getRandomAlphabetic()
+    this.lastName = RandomUtil.getRandomAlphabetic()
+    this.middleName = RandomUtil.getRandomAlphabetic()
     return this
 }
