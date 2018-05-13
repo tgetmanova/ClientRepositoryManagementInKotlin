@@ -10,7 +10,7 @@ class ClientTest {
     fun firstTest() {
         val dao = ClientServiceDao()
 
-        dao.getClients().forEach { println(it.firstName) }
+        dao.getClients().forEach { println(it.toString()) }
     }
 
 }
