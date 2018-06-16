@@ -12,6 +12,7 @@ class ClientServiceDao {
 
     companion object {
         const val CLIENTS_ENDPOINT = "/clients"
+        const val CLIENT_ENDPOINT = CLIENTS_ENDPOINT + "/{id}"
     }
 
     init {
@@ -39,5 +40,13 @@ class ClientServiceDao {
                 .thenReturn()
 
         return Serializer.readResponse(response)
+    }
+
+    fun deleteClient(id: Int?) {
+        val response =
+                given()
+                .whenDoRequest()
+                    .delete(CLIENT_ENDPOINT, id)
+                .thenReturn()
     }
 }

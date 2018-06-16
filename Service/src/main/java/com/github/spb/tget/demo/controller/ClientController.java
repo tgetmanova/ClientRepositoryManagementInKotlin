@@ -32,4 +32,9 @@ public class ClientController {
     public ClientDto createClient(@RequestBody ClientDto client) {
         return clientManager.createClient(client);
     }
+
+    @RequestMapping(value = resourceUrl + "/{id}", method = RequestMethod.DELETE)
+    public void deleteClient(@PathVariable Integer id) {
+        clientManager.deleteClient(id);
+    }
 }

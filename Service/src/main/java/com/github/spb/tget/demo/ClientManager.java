@@ -16,7 +16,6 @@ public class ClientManager {
     private ContactDao contactDao = new ContactDao();
     private ClientConverter clientConverter = new ClientConverter();
 
-
     public List<ClientDto> getClients() {
         return clientDao.getClients().stream()
                 .map(client -> clientConverter.toDto(client))
@@ -39,5 +38,13 @@ public class ClientManager {
         Client client = clientDao.resolveClient(id);
         contactDao.addContacts(contacts.stream().map(c -> clientConverter.contactInfoFromDto(c))
                 .collect(Collectors.toList()), client);
+    }
+
+    public void deleteClient(Integer id) {
+        Client client = clientDao.resolveClient(id);
+        if (client == null) {
+            throw new IllegalStateException("Client is not found, ID: " + id);
+        }
+        clientDao.deleteClient(client);
     }
 }
