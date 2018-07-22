@@ -153,7 +153,7 @@ public class ClientDaoTest {
 
     @Test
     public void deleteClientWithContacts() {
-        Client client = clientDao.createRandomClientWithContactInformation2();
+        Client client = clientDao.createRandomClientWithContactInformation();
 
         List<Client> clients = clientDao.getClients();
 

@@ -8,6 +8,7 @@ import com.github.spb.tget.demo.dto.ClientDto;
 import com.github.spb.tget.demo.dto.ContactInformationDto;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 public class ClientManager {
@@ -23,7 +24,11 @@ public class ClientManager {
     }
 
     public ClientDto getClient(Integer id) {
-        return clientConverter.toDto(clientDao.resolveClient(id));
+        Client targetClient = clientDao.resolveClient(id);
+        if (targetClient == null) {
+            throw new NoSuchElementException("Failed to find client with id: " + id);
+        }
+        return clientConverter.toDto(targetClient);
     }
 
     public List<ContactInformationDto> getClientContacts(Integer id) {
@@ -43,8 +48,17 @@ public class ClientManager {
     public void deleteClient(Integer id) {
         Client client = clientDao.resolveClient(id);
         if (client == null) {
-            throw new IllegalStateException("Client is not found, ID: " + id);
+            throw new NoSuchElementException("Failed to find client with id: " + id);
         }
         clientDao.deleteClient(client);
+    }
+
+    public void updateClient(Integer id, ClientDto clientDto) {
+        Client client = clientDao.resolveClient(id);
+        if (client == null) {
+            throw new NoSuchElementException("Failed to find client with id: " + id);
+        }
+        clientDto.setId(id);
+        clientDao.updateClient(clientConverter.fromDto(clientDto));
     }
 }

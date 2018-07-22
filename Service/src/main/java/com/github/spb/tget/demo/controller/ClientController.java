@@ -1,7 +1,7 @@
 package com.github.spb.tget.demo.controller;
 
 import com.github.spb.tget.demo.ClientManager;
-import com.github.spb.tget.demo.dto.ClientDto;;
+import com.github.spb.tget.demo.dto.ClientDto;
 
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,5 +36,10 @@ public class ClientController {
     @RequestMapping(value = resourceUrl + "/{id}", method = RequestMethod.DELETE)
     public void deleteClient(@PathVariable Integer id) {
         clientManager.deleteClient(id);
+    }
+
+    @RequestMapping(value = resourceUrl + "/{id}", method = RequestMethod.PUT)
+    public void updateClient(@PathVariable Integer id, @RequestBody ClientDto client) {
+        clientManager.updateClient(id, client);
     }
 }

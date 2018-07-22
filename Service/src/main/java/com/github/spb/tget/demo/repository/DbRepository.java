@@ -48,6 +48,7 @@ public class DbRepository<T> implements Repository {
         }
     }
 
+    @Override
     public int addItemAndGetId(Object item) {
         Session session = DbSessionUtil.getSessionFactory().getCurrentSession();
         Transaction transaction = session.beginTransaction();

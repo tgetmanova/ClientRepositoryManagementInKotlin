@@ -67,11 +67,16 @@ public class ContactInformation {
 
     public static ContactInformation random() {
         return new ContactInformation()
-                .withAddress(RandomUtils.getRandomAlpanumeric(40))
+                .withAddress(String.format("Country: %s; State: %s; Street address: %s; Postal code: %s",
+                        RandomUtils.getRandomAlphabetic(10),
+                        RandomUtils.getRandomAlphabetic(10),
+                        RandomUtils.getRandomString(60),
+                        RandomUtils.getRandomString(20)))
                 .withEmail(RandomUtils.getRandomEmailAddress())
-                .withPhone(String.format("+%s-%s",
+                .withPhone(String.format("+%s-%s ext.%s",
                         RandomUtils.getRandomNumeric(3),
-                        RandomUtils.getRandomNumeric(10)));
+                        RandomUtils.getRandomNumeric(10),
+                        RandomUtils.getRandomNumeric(5)));
     }
 
     @Override
