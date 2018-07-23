@@ -6,7 +6,13 @@ import com.github.spb.tget.demo.util.RandomUtils
 
 class ContactInformationInplaceRepository : InplaceRepository<ContactInformation> {
 
-    private val contactsList = initContactList()
+    companion object {
+        @JvmStatic lateinit var contactsList : MutableList<ContactInformation>
+    }
+
+    init {
+        contactsList = initContactList()
+    }
 
     private fun initContactList(): MutableList<ContactInformation> {
         val contacts = mutableListOf(

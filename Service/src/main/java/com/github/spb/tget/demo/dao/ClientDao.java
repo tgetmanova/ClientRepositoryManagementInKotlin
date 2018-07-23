@@ -2,6 +2,7 @@ package com.github.spb.tget.demo.dao;
 
 import com.github.spb.tget.demo.data.Client;
 import com.github.spb.tget.demo.data.ContactInformation;
+import com.github.spb.tget.demo.repository.InplaceRepository;
 import com.github.spb.tget.demo.repository.Repository;
 import com.github.spb.tget.demo.repository.dbRepository.ClientDbRepository;
 import com.github.spb.tget.demo.repository.dbRepository.ContactInformationDbRepository;
@@ -14,8 +15,8 @@ import java.util.Set;
 
 public class ClientDao {
 
-    private Repository clientRepository;
-    private Repository contactInformationRepository;
+    private Repository<Client> clientRepository;
+    private Repository<ContactInformation> contactInformationRepository;
 
     public ClientDao() {
         initRepositoriesByType();
@@ -75,6 +76,12 @@ public class ClientDao {
 
     public void deleteClient(Client client) {
         this.clientRepository.deleteItem(client);
+        if (this.clientRepository instanceof InplaceRepository
+                && client.getContactInformation() != null
+                && !client.getContactInformation().isEmpty()) {
+            client.getContactInformation().forEach(
+                    contact -> this.contactInformationRepository.deleteItem(contact));
+        }
     }
 
     public List<Client> getClients() {

@@ -39,6 +39,8 @@ CREATE TABLE Contacts (
 INSERT INTO Contacts (ClientID, PhoneNumber, Address, Email)
 VALUES (12, '+923123', 'fsdfsdfsadf', 'adsffdh@sadsads.test' );
 
+USE myschema;
+
 SELECT *
 FROM Clients;
 

@@ -6,7 +6,13 @@ import com.github.spb.tget.demo.util.RandomUtils
 
 class ClientInplaceRepository : InplaceRepository<Client> {
 
-    private val clientsList = initClientsList()
+    companion object {
+        @JvmStatic lateinit var clientsList: MutableList<Client>
+    }
+
+    init {
+        clientsList = initClientsList()
+    }
 
     private fun initClientsList(): MutableList<Client> {
         val clients = mutableListOf(
