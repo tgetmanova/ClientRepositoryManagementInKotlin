@@ -87,10 +87,10 @@ public class Client {
 
     public static Client random() {
         return new Client()
-                .withFirstName(RandomUtils.getRandomAlphabetic(15))
-                .withLastName(RandomUtils.getRandomAlphabetic(15))
-                .withMiddleName(RandomUtils.getRandomAlpanumeric(15))
-                .withDateOfBirth(Date.valueOf(RandomUtils.randomDateOfBirthAsAdult().toLocalDate()));
+                .withFirstName(RandomUtils.Companion.getRandomAlphabetic(15))
+                .withLastName(RandomUtils.Companion.getRandomAlphabetic(15))
+                .withMiddleName(RandomUtils.Companion.getRandomAlpanumeric(15))
+                .withDateOfBirth(Date.valueOf(RandomUtils.Companion.randomDateOfBirthAsAdult().toLocalDate()));
     }
 
     public Client withRandomContactInformation() {

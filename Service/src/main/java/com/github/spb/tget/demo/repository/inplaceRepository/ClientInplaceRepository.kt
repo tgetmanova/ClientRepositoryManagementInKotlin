@@ -18,7 +18,7 @@ class ClientInplaceRepository : InplaceRepository<Client> {
                 Client.random().withRandomContactInformation(),
                 Client.random().withRandomContactInformation(),
                 Client.random().withRandomContactInformation())
-        clients.forEach { client -> client.clientId = RandomUtils.getRandomInteger() }
+        clients.forEach { client -> client.clientId = RandomUtils.randomInteger }
         return clients
     }
 

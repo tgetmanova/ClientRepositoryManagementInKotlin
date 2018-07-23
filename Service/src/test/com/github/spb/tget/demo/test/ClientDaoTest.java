@@ -93,9 +93,9 @@ public class ClientDaoTest {
                 .as("Client is not added to the repository")
                 .contains(client);
 
-        Client changedClient = client.withFirstName(RandomUtils.getRandomAlphabetic(5))
-                .withLastName(RandomUtils.getRandomAlphabetic(5))
-                .withMiddleName(RandomUtils.getRandomAlphabetic(5));
+        Client changedClient = client.withFirstName(RandomUtils.Companion.getRandomAlphabetic(5))
+                .withLastName(RandomUtils.Companion.getRandomAlphabetic(5))
+                .withMiddleName(RandomUtils.Companion.getRandomAlphabetic(5));
         clientDao.updateClient(changedClient);
         Client updatedClient = clientDao.resolveClient(client.getClientId());
 
@@ -116,9 +116,9 @@ public class ClientDaoTest {
                 .as("Client is not added to the repository")
                 .contains(initialClient);
 
-        Client changedClient = initialClient.withFirstName(RandomUtils.getRandomAlphabetic(5))
-                .withLastName(RandomUtils.getRandomAlphabetic(5))
-                .withMiddleName(RandomUtils.getRandomAlphabetic(5));
+        Client changedClient = initialClient.withFirstName(RandomUtils.Companion.getRandomAlphabetic(5))
+                .withLastName(RandomUtils.Companion.getRandomAlphabetic(5))
+                .withMiddleName(RandomUtils.Companion.getRandomAlphabetic(5));
         clientDao.updateClient(changedClient);
         Client updatedClient = clientDao.resolveClient(initialClient.getClientId());
 

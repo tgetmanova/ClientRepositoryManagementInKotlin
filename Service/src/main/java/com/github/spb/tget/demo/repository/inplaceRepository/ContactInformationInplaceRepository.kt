@@ -16,7 +16,7 @@ class ContactInformationInplaceRepository : InplaceRepository<ContactInformation
     private fun initContactList(): MutableList<ContactInformation> {
         val contacts = mutableListOf(
                 ContactInformation.random(), ContactInformation.random(), ContactInformation.random())
-        contacts.forEach { contact -> contact.contactId = RandomUtils.getRandomInteger() }
+        contacts.forEach { contact -> contact.contactId = RandomUtils.randomInteger }
         return contacts
     }
 

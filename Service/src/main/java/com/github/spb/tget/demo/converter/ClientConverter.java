@@ -15,7 +15,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import static com.github.spb.tget.demo.util.CommonUtils.getSubstringBetweenOrToEnd;
+import static com.github.spb.tget.demo.util.CommonUtilsKt.getSubstringBetweenOrToEnd;
 
 public class ClientConverter {
 
