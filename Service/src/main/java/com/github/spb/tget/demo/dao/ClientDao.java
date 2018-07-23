@@ -2,9 +2,9 @@ package com.github.spb.tget.demo.dao;
 
 import com.github.spb.tget.demo.data.Client;
 import com.github.spb.tget.demo.data.ContactInformation;
+import com.github.spb.tget.demo.repository.Repository;
 import com.github.spb.tget.demo.repository.RepositoryFactory;
 import com.github.spb.tget.demo.repository.inplaceRepository.InplaceRepository;
-import com.github.spb.tget.demo.repository.Repository;
 
 import java.util.HashSet;
 import java.util.List;
