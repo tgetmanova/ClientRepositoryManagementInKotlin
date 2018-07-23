@@ -1,7 +1,6 @@
 package com.github.spb.tget.demo.repository.inplaceRepository
 
 import com.github.spb.tget.demo.data.ContactInformation
-import com.github.spb.tget.demo.repository.InplaceRepository
 import com.github.spb.tget.demo.util.RandomUtils
 
 class ContactInformationInplaceRepository : InplaceRepository<ContactInformation> {

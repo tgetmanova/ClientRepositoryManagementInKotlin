@@ -1,5 +1,6 @@
-package com.github.spb.tget.demo.repository;
+package com.github.spb.tget.demo.repository.dbRepository;
 
+import com.github.spb.tget.demo.repository.Repository;
 import com.github.spb.tget.demo.util.DbSessionUtil;
 
 import org.hibernate.Query;

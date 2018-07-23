@@ -3,31 +3,17 @@ package com.github.spb.tget.demo.dao;
 import com.github.spb.tget.demo.data.Client;
 import com.github.spb.tget.demo.data.ContactInformation;
 import com.github.spb.tget.demo.repository.Repository;
-import com.github.spb.tget.demo.repository.dbRepository.ContactInformationDbRepository;
-import com.github.spb.tget.demo.repository.inplaceRepository.ContactInformationInplaceRepository;
+import com.github.spb.tget.demo.repository.RepositoryFactory;
 
 import java.util.List;
 
 public class ContactDao {
 
-    private Repository<ContactInformation> contactInformationRepository;
+    private Repository contactInformationRepository;
+    private String repoType = System.getProperty("repoType");
 
     public ContactDao() {
-        initRepositoriesByType();
-    }
-
-    private void initRepositoriesByType() {
-        String repoType = System.getProperty("repoType");
-        switch (repoType) {
-            case "db":
-                this.contactInformationRepository = ContactInformationDbRepository.create();
-                break;
-            case "inplace":
-                this.contactInformationRepository = new ContactInformationInplaceRepository();
-                break;
-            default:
-                throw new IllegalStateException("Unknown repository type: " + repoType);
-        }
+        contactInformationRepository = RepositoryFactory.Companion.getContactInformationRepositoryByType(repoType);
     }
 
     public List<ContactInformation> getAllContacts() {
