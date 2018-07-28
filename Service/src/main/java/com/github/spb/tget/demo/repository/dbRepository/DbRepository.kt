@@ -1,7 +1,7 @@
 package com.github.spb.tget.demo.repository.dbRepository
 
 import com.github.spb.tget.demo.repository.Repository
-import com.github.spb.tget.demo.util.DbSessionUtil
+import com.github.spb.tget.demo.util.DbSessionUtils
 
 open class DbRepository<T> : Repository<T> {
 
@@ -10,7 +10,7 @@ open class DbRepository<T> : Repository<T> {
     override fun getItems(): List<T> {
         val items: List<T>
         try {
-            val session = DbSessionUtil.getSessionFactory().currentSession
+            val session = DbSessionUtils.sessionFactory.currentSession
             val transaction = session.beginTransaction()
             val query = session.createQuery("from " + entityName!!)
 
@@ -18,14 +18,14 @@ open class DbRepository<T> : Repository<T> {
 
             transaction.commit()
         } finally {
-            DbSessionUtil.closeSession()
+            DbSessionUtils.closeSession()
         }
 
         return items
     }
 
     override fun addItem(item: T) {
-        val session = DbSessionUtil.getSessionFactory().currentSession
+        val session = DbSessionUtils.sessionFactory.currentSession
         val transaction = session.beginTransaction()
         try {
             session.save(item)
@@ -34,12 +34,12 @@ open class DbRepository<T> : Repository<T> {
             transaction?.rollback()
             throw exception
         } finally {
-            DbSessionUtil.closeSession()
+            DbSessionUtils.closeSession()
         }
     }
 
     override fun addItemAndGetId(item: T): Int {
-        val session = DbSessionUtil.getSessionFactory().currentSession
+        val session = DbSessionUtils.sessionFactory.currentSession
         val transaction = session.beginTransaction()
         var id = -1
         try {
@@ -49,13 +49,13 @@ open class DbRepository<T> : Repository<T> {
             transaction?.rollback()
             throw exception
         } finally {
-            DbSessionUtil.closeSession()
+            DbSessionUtils.closeSession()
         }
         return id
     }
 
     override fun updateItem(item: T) {
-        val session = DbSessionUtil.getSessionFactory().currentSession
+        val session = DbSessionUtils.sessionFactory.currentSession
         val transaction = session.beginTransaction()
         try {
             session.update(item)
@@ -64,12 +64,12 @@ open class DbRepository<T> : Repository<T> {
             transaction?.rollback()
             throw exception
         } finally {
-            DbSessionUtil.closeSession()
+            DbSessionUtils.closeSession()
         }
     }
 
     override fun deleteItem(item: T) {
-        val session = DbSessionUtil.getSessionFactory().currentSession
+        val session = DbSessionUtils.sessionFactory.currentSession
         val transaction = session.beginTransaction()
         try {
             session.delete(item)
@@ -78,7 +78,7 @@ open class DbRepository<T> : Repository<T> {
             transaction?.rollback()
             throw exception
         } finally {
-            DbSessionUtil.closeSession()
+            DbSessionUtils.closeSession()
         }
     }
 }
