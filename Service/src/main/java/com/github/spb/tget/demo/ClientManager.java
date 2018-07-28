@@ -3,7 +3,7 @@ package com.github.spb.tget.demo;
 import com.github.spb.tget.demo.converter.ClientConverter;
 import com.github.spb.tget.demo.dao.ClientDao;
 import com.github.spb.tget.demo.dao.ContactDao;
-import com.github.spb.tget.demo.data.Client;
+import com.github.spb.tget.demo.data.ClientEntity;
 import com.github.spb.tget.demo.dto.ClientDto;
 import com.github.spb.tget.demo.dto.ContactInformationDto;
 
@@ -24,7 +24,7 @@ public class ClientManager {
     }
 
     public ClientDto getClient(Integer id) {
-        Client targetClient = clientDao.resolveClient(id);
+        ClientEntity targetClient = clientDao.resolveClient(id);
         if (targetClient == null) {
             throw new NoSuchElementException("Failed to find client with id: " + id);
         }
@@ -40,13 +40,13 @@ public class ClientManager {
     }
 
     public void addContacts(List<ContactInformationDto> contacts, Integer id) {
-        Client client = clientDao.resolveClient(id);
+        ClientEntity client = clientDao.resolveClient(id);
         contactDao.addContacts(contacts.stream().map(c -> clientConverter.contactInfoFromDto(c))
                 .collect(Collectors.toList()), client);
     }
 
     public void deleteClient(Integer id) {
-        Client client = clientDao.resolveClient(id);
+        ClientEntity client = clientDao.resolveClient(id);
         if (client == null) {
             throw new NoSuchElementException("Failed to find client with id: " + id);
         }
@@ -54,7 +54,7 @@ public class ClientManager {
     }
 
     public void updateClient(Integer id, ClientDto clientDto) {
-        Client client = clientDao.resolveClient(id);
+        ClientEntity client = clientDao.resolveClient(id);
         if (client == null) {
             throw new NoSuchElementException("Failed to find client with id: " + id);
         }

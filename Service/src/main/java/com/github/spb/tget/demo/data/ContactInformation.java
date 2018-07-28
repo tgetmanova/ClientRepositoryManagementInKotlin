@@ -4,17 +4,17 @@ import com.github.spb.tget.demo.util.RandomUtils;
 
 public class ContactInformation {
 
-    private Client client;
+    private ClientEntity client;
     private int contactId;
     private String phone;
     private String address;
     private String email;
 
-    public Client getClient() {
+    public ClientEntity getClient() {
         return client;
     }
 
-    public void setClient(Client client) {
+    public void setClient(ClientEntity client) {
         this.client = client;
     }
 

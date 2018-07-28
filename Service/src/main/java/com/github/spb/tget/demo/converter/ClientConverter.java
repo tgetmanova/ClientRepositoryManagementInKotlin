@@ -1,6 +1,6 @@
 package com.github.spb.tget.demo.converter;
 
-import com.github.spb.tget.demo.data.Client;
+import com.github.spb.tget.demo.data.ClientEntity;
 import com.github.spb.tget.demo.data.ContactInformation;
 import com.github.spb.tget.demo.dto.AddressDto;
 import com.github.spb.tget.demo.dto.ClientDto;
@@ -19,8 +19,8 @@ import static com.github.spb.tget.demo.util.CommonUtilsKt.getSubstringBetweenOrT
 
 public class ClientConverter {
 
-    public Client fromDto(ClientDto clientDto) {
-        Client client = new Client();
+    public ClientEntity fromDto(ClientDto clientDto) {
+        ClientEntity client = new ClientEntity();
 
         client.setClientId(clientDto.getId());
         client.setFirstName(clientDto.getFirstName());
@@ -45,7 +45,7 @@ public class ClientConverter {
         return client;
     }
 
-    public ClientDto toDto(Client client) {
+    public ClientDto toDto(ClientEntity client) {
         ClientDto clientDto = new ClientDto();
 
         clientDto.setId(client.getClientId());

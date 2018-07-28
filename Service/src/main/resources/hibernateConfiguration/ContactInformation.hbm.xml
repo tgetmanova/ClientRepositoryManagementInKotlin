@@ -19,7 +19,7 @@
         <property name="email" column="Email" type="string"/>
         <property name="address" column="Address" type="string"/>
 
-        <many-to-one name="client" class="com.github.spb.tget.demo.data.Client" fetch="select">
+        <many-to-one name="client" class="com.github.spb.tget.demo.data.ClientEntity" fetch="select">
             <column name="ClientID" not-null="true"/>
         </many-to-one>
 

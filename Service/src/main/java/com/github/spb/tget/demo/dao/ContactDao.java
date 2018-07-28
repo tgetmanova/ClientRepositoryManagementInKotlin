@@ -1,6 +1,6 @@
 package com.github.spb.tget.demo.dao;
 
-import com.github.spb.tget.demo.data.Client;
+import com.github.spb.tget.demo.data.ClientEntity;
 import com.github.spb.tget.demo.data.ContactInformation;
 import com.github.spb.tget.demo.repository.Repository;
 import com.github.spb.tget.demo.repository.RepositoryFactory;
@@ -20,7 +20,7 @@ public class ContactDao {
         return contactInformationRepository.getItems();
     }
 
-    public void addContacts(List<ContactInformation> contacts, Client client) {
+    public void addContacts(List<ContactInformation> contacts, ClientEntity client) {
         contacts.forEach(c -> {
             c.setClient(client);
             contactInformationRepository.addItem(c);

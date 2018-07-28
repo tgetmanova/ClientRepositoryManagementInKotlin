@@ -1,11 +1,11 @@
 package com.github.spb.tget.demo.repository.dbRepository
 
-import com.github.spb.tget.demo.data.Client
+import com.github.spb.tget.demo.data.ClientEntity
 
-class ClientDbRepository private constructor() : DbRepository<Client>() {
+class ClientDbRepository private constructor() : DbRepository<ClientEntity>() {
 
     init {
-        this.entityName = "Client"
+        this.entityName = "ClientEntity"
     }
 
     companion object {

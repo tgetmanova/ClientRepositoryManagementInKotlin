@@ -1,6 +1,6 @@
 package com.github.spb.tget.demo.dao;
 
-import com.github.spb.tget.demo.data.Client;
+import com.github.spb.tget.demo.data.ClientEntity;
 import com.github.spb.tget.demo.data.ContactInformation;
 import com.github.spb.tget.demo.repository.Repository;
 import com.github.spb.tget.demo.repository.RepositoryFactory;
@@ -21,14 +21,14 @@ public class ClientDao {
         contactInformationRepository = RepositoryFactory.Companion.getContactInformationRepositoryByType(repoType);
     }
 
-    public Client createRandomClient() {
-        Client client = Client.random();
+    public ClientEntity createRandomClient() {
+        ClientEntity client = ClientEntity.Companion.random();
         this.clientRepository.addItem(client);
         return client;
     }
 
-    public Client createRandomClientWithContactInformation() {
-        Client client = Client.random();
+    public ClientEntity createRandomClientWithContactInformation() {
+        ClientEntity client = ClientEntity.Companion.random();
         Set<ContactInformation> conInfo = new HashSet<>();
         conInfo.add(ContactInformation.random());
         client.setContactInformation(conInfo);
@@ -43,7 +43,7 @@ public class ClientDao {
         return client;
     }
 
-    public Client createClient(Client client) {
+    public ClientEntity createClient(ClientEntity client) {
         int clientId = this.clientRepository.addItemAndGetId(client);
         client.setClientId(clientId);
 
@@ -57,7 +57,7 @@ public class ClientDao {
         return client;
     }
 
-    public void deleteClient(Client client) {
+    public void deleteClient(ClientEntity client) {
         this.clientRepository.deleteItem(client);
         if (this.clientRepository instanceof InplaceRepository
                 && client.getContactInformation() != null
@@ -67,18 +67,18 @@ public class ClientDao {
         }
     }
 
-    public List<Client> getClients() {
+    public List<ClientEntity> getClients() {
         return this.clientRepository.getItems();
     }
 
-    public Client resolveClient(int clientId) {
+    public ClientEntity resolveClient(int clientId) {
         return getClients().stream()
                 .filter(client -> client.getClientId() == clientId)
                 .findFirst()
                 .orElse(null);
     }
 
-    public void updateClient(Client updatedClient) {
+    public void updateClient(ClientEntity updatedClient) {
         this.clientRepository.updateItem(updatedClient);
     }
 }

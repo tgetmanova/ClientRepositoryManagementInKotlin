@@ -1,43 +1,43 @@
 package com.github.spb.tget.demo.repository.inplaceRepository
 
-import com.github.spb.tget.demo.data.Client
+import com.github.spb.tget.demo.data.ClientEntity
 import com.github.spb.tget.demo.util.RandomUtils
 
-class ClientInplaceRepository : InplaceRepository<Client> {
+class ClientInplaceRepository : InplaceRepository<ClientEntity> {
 
     companion object {
-        @JvmStatic lateinit var clientsList: MutableList<Client>
+        @JvmStatic lateinit var clientsList: MutableList<ClientEntity>
     }
 
     init {
         clientsList = initClientsList()
     }
 
-    private fun initClientsList(): MutableList<Client> {
+    private fun initClientsList(): MutableList<ClientEntity> {
         val clients = mutableListOf(
-                Client.random().withRandomContactInformation(),
-                Client.random().withRandomContactInformation(),
-                Client.random().withRandomContactInformation())
+                ClientEntity.random().withRandomContactInformation(),
+                ClientEntity.random().withRandomContactInformation(),
+                ClientEntity.random().withRandomContactInformation())
         clients.forEach { client -> client.clientId = RandomUtils.randomInteger }
         return clients
     }
 
-    override fun getItems(): MutableList<Client> {
+    override fun getItems(): MutableList<ClientEntity> {
         return clientsList
     }
 
-    override fun addItem(item: Client) {
+    override fun addItem(item: ClientEntity) {
         clientsList.add(item)
     }
 
-    override fun addItemAndGetId(item: Client): Int {
+    override fun addItemAndGetId(item: ClientEntity): Int {
         clientsList.add(item)
         return item.clientId
     }
 
-    override fun updateItem(item: Client) {
+    override fun updateItem(item: ClientEntity) {
         var clientToUpdate = clientsList.find { it -> it.clientId == item.clientId }
-                ?: throw IllegalStateException("Client with ID ${item.clientId} cannot be found")
+                ?: throw IllegalStateException("ClientEntity with ID ${item.clientId} cannot be found")
         clientToUpdate.apply {
             firstName = item.firstName
             lastName = item.lastName
@@ -47,9 +47,9 @@ class ClientInplaceRepository : InplaceRepository<Client> {
         }
     }
 
-    override fun deleteItem(item: Client) {
+    override fun deleteItem(item: ClientEntity) {
         val clientToDelete = clientsList.find { it -> it.clientId == item.clientId }
-                ?: throw IllegalStateException("Client with ID ${item.clientId} cannot be found")
+                ?: throw IllegalStateException("ClientEntity with ID ${item.clientId} cannot be found")
         clientsList.remove(clientToDelete)
     }
 

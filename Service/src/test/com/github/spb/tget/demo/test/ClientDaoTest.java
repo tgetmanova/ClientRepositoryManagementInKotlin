@@ -1,10 +1,9 @@
 package com.github.spb.tget.demo.test;
 
-import com.github.spb.tget.demo.data.Client;
+import com.github.spb.tget.demo.data.ClientEntity;
 import com.github.spb.tget.demo.data.ContactInformation;
 import com.github.spb.tget.demo.dao.ClientDao;
 import com.github.spb.tget.demo.dao.ContactDao;
-import com.github.spb.tget.demo.util.RandomUtils;
 
 import org.assertj.core.api.Assertions;
 import org.assertj.core.api.SoftAssertions;
@@ -27,13 +26,13 @@ public class ClientDaoTest {
 
     @Test
     public void createClient() {
-        Client client = clientDao.createRandomClient();
+        ClientEntity client = clientDao.createRandomClient();
 
-        List<Client> clients = clientDao.getClients();
+        List<ClientEntity> clients = clientDao.getClients();
 
         SoftAssertions assertions = new SoftAssertions();
         assertions.assertThat(clients)
-                .as("Client is not added to the repository")
+                .as("ClientEntity is not added to the repository")
                 .contains(client);
 
         assertions.assertAll();
@@ -41,14 +40,14 @@ public class ClientDaoTest {
 
     @Test
     public void createClientWithSingleContactInfo() {
-        Client client = Client.random().withRandomContactInformation();
+        ClientEntity client = ClientEntity.Companion.random().withRandomContactInformation();
         clientDao.createClient(client);
 
-        List<Client> clients = clientDao.getClients();
+        List<ClientEntity> clients = clientDao.getClients();
 
         SoftAssertions assertions = new SoftAssertions();
         assertions.assertThat(clients)
-                .as("Client is not added to the repository")
+                .as("ClientEntity is not added to the repository")
                 .contains(client);
 
         List<ContactInformation> actualContacts = contactDao.getAllContacts();
@@ -61,18 +60,18 @@ public class ClientDaoTest {
 
     @Test
     public void createClientWithMultipleContactInfo() {
-        Client client = Client.random();
+        ClientEntity client = ClientEntity.Companion.random();
         Set<ContactInformation> expectedContacts = new HashSet<>();
         expectedContacts.add(ContactInformation.random());
         expectedContacts.add(ContactInformation.random());
-        client.withContactInformation(expectedContacts);
+        client.setContactInformation(expectedContacts);
         clientDao.createClient(client);
 
-        List<Client> clients = clientDao.getClients();
+        List<ClientEntity> clients = clientDao.getClients();
 
         SoftAssertions assertions = new SoftAssertions();
         assertions.assertThat(clients)
-                .as("Client is not added to the repository")
+                .as("ClientEntity is not added to the repository")
                 .contains(client);
 
         List<ContactInformation> actualContacts = contactDao.getAllContacts();
@@ -85,81 +84,77 @@ public class ClientDaoTest {
 
     @Test
     public void updateClient() {
-        Client client = clientDao.createRandomClient();
+        ClientEntity client = clientDao.createRandomClient();
 
-        List<Client> clients = clientDao.getClients();
+        List<ClientEntity> clients = clientDao.getClients();
 
         Assertions.assertThat(clients)
-                .as("Client is not added to the repository")
+                .as("ClientEntity is not added to the repository")
                 .contains(client);
 
-        Client changedClient = client.withFirstName(RandomUtils.Companion.getRandomAlphabetic(5))
-                .withLastName(RandomUtils.Companion.getRandomAlphabetic(5))
-                .withMiddleName(RandomUtils.Companion.getRandomAlphabetic(5));
+        ClientEntity changedClient = ClientEntity.Companion.random();
+        changedClient.setClientId(client.getClientId());
         clientDao.updateClient(changedClient);
-        Client updatedClient = clientDao.resolveClient(client.getClientId());
 
-        List<Client> updatedClients = clientDao.getClients();
-
+        List<ClientEntity> updatedClients = clientDao.getClients();
         Assertions.assertThat(updatedClients)
-                .as("Client is not updated in the repository")
+                .as("ClientEntity is not updated in the repository")
                 .contains(changedClient);
     }
 
     @Test
     public void resolveUpdatedClient() {
-        Client initialClient = clientDao.createRandomClient();
+        ClientEntity initialClient = clientDao.createRandomClient();
 
-        List<Client> clients = clientDao.getClients();
+        List<ClientEntity> clients = clientDao.getClients();
 
         Assertions.assertThat(clients)
-                .as("Client is not added to the repository")
+                .as("ClientEntity is not added to the repository")
                 .contains(initialClient);
 
-        Client changedClient = initialClient.withFirstName(RandomUtils.Companion.getRandomAlphabetic(5))
-                .withLastName(RandomUtils.Companion.getRandomAlphabetic(5))
-                .withMiddleName(RandomUtils.Companion.getRandomAlphabetic(5));
+        ClientEntity changedClient = ClientEntity.Companion.random();
+        changedClient.setClientId(initialClient.getClientId());
         clientDao.updateClient(changedClient);
-        Client updatedClient = clientDao.resolveClient(initialClient.getClientId());
 
+        ClientEntity updatedClient = clientDao.resolveClient(initialClient.getClientId());
         Assertions.assertThat(updatedClient)
-                .as("Client is not resolved as updated in the repository")
+                .as("ClientEntity is not resolved as updated in the repository")
                 .isEqualTo(changedClient);
     }
 
     @Test
     public void deleteClient() {
-        Client client = clientDao.createRandomClient();
+        ClientEntity client = clientDao.createRandomClient();
 
-        List<Client> clients = clientDao.getClients();
+        List<ClientEntity> clients = clientDao.getClients();
         Assertions.assertThat(clients)
-                .as("Client is not added to the repository")
+                .as("ClientEntity is not added to the repository")
                 .contains(client);
 
         clientDao.deleteClient(client);
-        Client deletedClient = clientDao.resolveClient(client.getClientId());
+        ClientEntity deletedClient = clientDao.resolveClient(client.getClientId());
 
-        List<Client> updatedClients = clientDao.getClients();
+        List<ClientEntity> updatedClients = clientDao.getClients();
 
         SoftAssertions assertions = new SoftAssertions();
         assertions.assertThat(updatedClients)
-                .as("Client must be deleted from the repository")
+                .as("ClientEntity must be deleted from the repository")
                 .doesNotContain(deletedClient);
         assertions.assertThat(deletedClient)
-                .as("Deleted Client should not be resolved in the repository")
+                .as("Deleted ClientEntity should not be resolved in the repository")
                 .isNull();
         assertions.assertAll();
     }
 
     @Test
     public void deleteClientWithContacts() {
-        Client client = clientDao.createRandomClientWithContactInformation();
+        ClientEntity client = clientDao.createRandomClientWithContactInformation();
 
-        List<Client> clients = clientDao.getClients();
+        List<ClientEntity> clients = clientDao.getClients();
 
         SoftAssertions assertions = new SoftAssertions();
         assertions.assertThat(clients)
-                .as("Client is not added to the repository")
+                .as("ClientEntity is not added to the repository")
                 .contains(client);
 
         List<ContactInformation> actualContacts = contactDao.getAllContacts();
@@ -171,15 +166,15 @@ public class ClientDaoTest {
 
         clientDao.deleteClient(client);
 
-        List<Client> updatedClients = clientDao.getClients();
+        List<ClientEntity> updatedClients = clientDao.getClients();
         List<ContactInformation> updatedContacts = contactDao.getAllContacts();
 
         assertions = new SoftAssertions();
         assertions.assertThat(updatedClients)
-                .as("Client must be deleted from the repository")
+                .as("ClientEntity must be deleted from the repository")
                 .doesNotContain(client);
         assertions.assertThat(updatedContacts)
-                .as("Deleted Client contacts must be cleared from the repository")
+                .as("Deleted ClientEntity contacts must be cleared from the repository")
                 .doesNotContainAnyElementsOf(client.getContactInformation());
         assertions.assertAll();
     }

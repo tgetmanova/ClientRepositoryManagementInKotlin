@@ -5,7 +5,7 @@
 
 <hibernate-mapping>
 
-    <class name="com.github.spb.tget.demo.data.Client" table="Clients">
+    <class name="com.github.spb.tget.demo.data.ClientEntity" table="Clients">
 
         <meta attribute="class-description">
             This class contains the Client detail.
