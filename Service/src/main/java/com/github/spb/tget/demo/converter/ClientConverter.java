@@ -1,7 +1,7 @@
 package com.github.spb.tget.demo.converter;
 
 import com.github.spb.tget.demo.data.ClientEntity;
-import com.github.spb.tget.demo.data.ContactInformation;
+import com.github.spb.tget.demo.data.ContactEntity;
 import com.github.spb.tget.demo.dto.AddressDto;
 import com.github.spb.tget.demo.dto.ClientDto;
 import com.github.spb.tget.demo.dto.ContactInformationDto;
@@ -28,11 +28,11 @@ public class ClientConverter {
         client.setMiddleName(clientDto.getMiddleName());
         client.setDateOfBirth(
                 Date.valueOf(clientDto.getDateOfBirth().toLocalDate().toString()));
-        Set<ContactInformation> contactInfoSet = new HashSet<>();
+        Set<ContactEntity> contactInfoSet = new HashSet<>();
 
         if (clientDto.getContacts() != null && !clientDto.getContacts().isEmpty()) {
             clientDto.getContacts().forEach(contact -> {
-                ContactInformation contactInfo = contactInfoFromDto(contact);
+                ContactEntity contactInfo = contactInfoFromDto(contact);
                 if (!StringUtils.isAllBlank(contactInfo.getAddress(),
                         contactInfo.getEmail(), contactInfo.getPhone())) {
                     contactInfoSet.add(contactInfo);
@@ -66,7 +66,7 @@ public class ClientConverter {
         return clientDto;
     }
 
-    public ContactInformationDto contactInfoToDto(ContactInformation contactInformation) {
+    public ContactInformationDto contactInfoToDto(ContactEntity contactInformation) {
         ContactInformationDto contactInformationDto = new ContactInformationDto();
         contactInformationDto.setEmailAddress(contactInformation.getEmail());
         contactInformationDto.setAddress(addressToDto(contactInformation.getAddress()));
@@ -97,8 +97,8 @@ public class ClientConverter {
         return phoneDto;
     }
 
-    public ContactInformation contactInfoFromDto(ContactInformationDto contactDto) {
-        ContactInformation contactInfo = new ContactInformation();
+    public ContactEntity contactInfoFromDto(ContactInformationDto contactDto) {
+        ContactEntity contactInfo = new ContactEntity();
 
         contactInfo.setEmail(contactDto.getEmailAddress());
 

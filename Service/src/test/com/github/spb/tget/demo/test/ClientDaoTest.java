@@ -1,9 +1,9 @@
 package com.github.spb.tget.demo.test;
 
 import com.github.spb.tget.demo.data.ClientEntity;
-import com.github.spb.tget.demo.data.ContactInformation;
 import com.github.spb.tget.demo.dao.ClientDao;
 import com.github.spb.tget.demo.dao.ContactDao;
+import com.github.spb.tget.demo.data.ContactEntity;
 
 import org.assertj.core.api.Assertions;
 import org.assertj.core.api.SoftAssertions;
@@ -50,7 +50,7 @@ public class ClientDaoTest {
                 .as("ClientEntity is not added to the repository")
                 .contains(client);
 
-        List<ContactInformation> actualContacts = contactDao.getAllContacts();
+        List<ContactEntity> actualContacts = contactDao.getAllContacts();
         assertions.assertThat(actualContacts)
                 .as("Contact information is not added to the repository")
                 .containsAll(client.getContactInformation());
@@ -61,9 +61,9 @@ public class ClientDaoTest {
     @Test
     public void createClientWithMultipleContactInfo() {
         ClientEntity client = ClientEntity.Companion.random();
-        Set<ContactInformation> expectedContacts = new HashSet<>();
-        expectedContacts.add(ContactInformation.random());
-        expectedContacts.add(ContactInformation.random());
+        Set<ContactEntity> expectedContacts = new HashSet<>();
+        expectedContacts.add(ContactEntity.Companion.random());
+        expectedContacts.add(ContactEntity.Companion.random());
         client.setContactInformation(expectedContacts);
         clientDao.createClient(client);
 
@@ -74,7 +74,7 @@ public class ClientDaoTest {
                 .as("ClientEntity is not added to the repository")
                 .contains(client);
 
-        List<ContactInformation> actualContacts = contactDao.getAllContacts();
+        List<ContactEntity> actualContacts = contactDao.getAllContacts();
         assertions.assertThat(actualContacts)
                 .as("Contact information is not added to the repository")
                 .containsAll(client.getContactInformation());
@@ -157,7 +157,7 @@ public class ClientDaoTest {
                 .as("ClientEntity is not added to the repository")
                 .contains(client);
 
-        List<ContactInformation> actualContacts = contactDao.getAllContacts();
+        List<ContactEntity> actualContacts = contactDao.getAllContacts();
         assertions.assertThat(actualContacts)
                 .as("Contact information is not added to the repository")
                 .containsAll(client.getContactInformation());
@@ -167,7 +167,7 @@ public class ClientDaoTest {
         clientDao.deleteClient(client);
 
         List<ClientEntity> updatedClients = clientDao.getClients();
-        List<ContactInformation> updatedContacts = contactDao.getAllContacts();
+        List<ContactEntity> updatedContacts = contactDao.getAllContacts();
 
         assertions = new SoftAssertions();
         assertions.assertThat(updatedClients)

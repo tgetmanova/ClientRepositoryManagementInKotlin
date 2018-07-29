@@ -1,7 +1,7 @@
 package com.github.spb.tget.demo.dao;
 
 import com.github.spb.tget.demo.data.ClientEntity;
-import com.github.spb.tget.demo.data.ContactInformation;
+import com.github.spb.tget.demo.data.ContactEntity;
 import com.github.spb.tget.demo.repository.Repository;
 import com.github.spb.tget.demo.repository.RepositoryFactory;
 import com.github.spb.tget.demo.repository.inplaceRepository.InplaceRepository;
@@ -29,8 +29,8 @@ public class ClientDao {
 
     public ClientEntity createRandomClientWithContactInformation() {
         ClientEntity client = ClientEntity.Companion.random();
-        Set<ContactInformation> conInfo = new HashSet<>();
-        conInfo.add(ContactInformation.random());
+        Set<ContactEntity> conInfo = new HashSet<>();
+        conInfo.add(ContactEntity.Companion.random());
         client.setContactInformation(conInfo);
 
         this.clientRepository.addItem(client);

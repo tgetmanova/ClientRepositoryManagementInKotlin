@@ -13,11 +13,11 @@ class ClientEntity {
     var lastName: String? = null
     var middleName: String? = null
     var dateOfBirth: Date? = null
-    var contactInformation: MutableSet<ContactInformation>? = null
+    var contactInformation: MutableSet<ContactEntity>? = null
 
     fun withRandomContactInformation(): ClientEntity {
         this.contactInformation = HashSet()
-        val contactInfo = ContactInformation.random()
+        val contactInfo = ContactEntity.random()
         this.contactInformation!!.add(contactInfo)
         contactInfo.client = this
         return this

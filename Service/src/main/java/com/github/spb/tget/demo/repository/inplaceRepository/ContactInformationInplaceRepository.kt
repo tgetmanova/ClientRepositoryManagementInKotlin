@@ -1,39 +1,39 @@
 package com.github.spb.tget.demo.repository.inplaceRepository
 
-import com.github.spb.tget.demo.data.ContactInformation
+import com.github.spb.tget.demo.data.ContactEntity
 import com.github.spb.tget.demo.util.RandomUtils
 
-class ContactInformationInplaceRepository : InplaceRepository<ContactInformation> {
+class ContactInformationInplaceRepository : InplaceRepository<ContactEntity> {
 
     companion object {
-        @JvmStatic lateinit var contactsList : MutableList<ContactInformation>
+        @JvmStatic lateinit var contactsList : MutableList<ContactEntity>
     }
 
     init {
         contactsList = initContactList()
     }
 
-    private fun initContactList(): MutableList<ContactInformation> {
+    private fun initContactList(): MutableList<ContactEntity> {
         val contacts = mutableListOf(
-                ContactInformation.random(), ContactInformation.random(), ContactInformation.random())
+                ContactEntity.random(), ContactEntity.random(), ContactEntity.random())
         contacts.forEach { contact -> contact.contactId = RandomUtils.randomInteger }
         return contacts
     }
 
-    override fun getItems(): MutableList<ContactInformation> {
+    override fun getItems(): MutableList<ContactEntity> {
         return contactsList
     }
 
-    override fun addItem(item: ContactInformation) {
+    override fun addItem(item: ContactEntity) {
         contactsList.add(item)
     }
 
-    override fun addItemAndGetId(item: ContactInformation): Int {
+    override fun addItemAndGetId(item: ContactEntity): Int {
         contactsList.add(item)
         return item.contactId
     }
 
-    override fun updateItem(item: ContactInformation) {
+    override fun updateItem(item: ContactEntity) {
         val contactToUpdate = contactsList.find { it -> it.contactId == item.contactId }
                 ?: throw IllegalStateException("Contact with ID ${item.contactId} cannot be found")
         contactToUpdate.apply {
@@ -43,7 +43,7 @@ class ContactInformationInplaceRepository : InplaceRepository<ContactInformation
         }
     }
 
-    override fun deleteItem(item: ContactInformation) {
+    override fun deleteItem(item: ContactEntity) {
         val contactToDelete = contactsList.find { it -> it.contactId == item.contactId }
                 ?: throw IllegalStateException("Contact with ID ${item.contactId} cannot be found")
         contactsList.remove(contactToDelete)
