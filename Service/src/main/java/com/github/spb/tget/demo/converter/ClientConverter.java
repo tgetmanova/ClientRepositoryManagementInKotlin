@@ -4,7 +4,7 @@ import com.github.spb.tget.demo.data.ClientEntity;
 import com.github.spb.tget.demo.data.ContactEntity;
 import com.github.spb.tget.demo.dto.AddressDto;
 import com.github.spb.tget.demo.dto.ClientDto;
-import com.github.spb.tget.demo.dto.ContactInformationDto;
+import com.github.spb.tget.demo.dto.ContactDto;
 import com.github.spb.tget.demo.dto.PhoneDto;
 
 import org.apache.commons.lang3.StringUtils;
@@ -55,10 +55,10 @@ public class ClientConverter {
         clientDto.setDateOfBirth(client.getDateOfBirth() == null
                 ? null : client.getDateOfBirth().toLocalDate().atStartOfDay());
 
-        List<ContactInformationDto> contactInformationDtos = new ArrayList<>();
+        List<ContactDto> contactInformationDtos = new ArrayList<>();
 
         client.getContactInformation().forEach(ci -> {
-            ContactInformationDto contactInformationDto = contactInfoToDto(ci);
+            ContactDto contactInformationDto = contactInfoToDto(ci);
             contactInformationDtos.add(contactInformationDto);
         });
 
@@ -66,8 +66,8 @@ public class ClientConverter {
         return clientDto;
     }
 
-    public ContactInformationDto contactInfoToDto(ContactEntity contactInformation) {
-        ContactInformationDto contactInformationDto = new ContactInformationDto();
+    public ContactDto contactInfoToDto(ContactEntity contactInformation) {
+        ContactDto contactInformationDto = new ContactDto();
         contactInformationDto.setEmailAddress(contactInformation.getEmail());
         contactInformationDto.setAddress(addressToDto(contactInformation.getAddress()));
         contactInformationDto.setPhone(phoneToDto(contactInformation.getPhone()));
@@ -97,7 +97,7 @@ public class ClientConverter {
         return phoneDto;
     }
 
-    public ContactEntity contactInfoFromDto(ContactInformationDto contactDto) {
+    public ContactEntity contactInfoFromDto(ContactDto contactDto) {
         ContactEntity contactInfo = new ContactEntity();
 
         contactInfo.setEmail(contactDto.getEmailAddress());

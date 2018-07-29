@@ -1,7 +1,7 @@
 package com.github.spb.tget.demo.controller;
 
 import com.github.spb.tget.demo.ClientManager;
-import com.github.spb.tget.demo.dto.ContactInformationDto;
+import com.github.spb.tget.demo.dto.ContactDto;
 
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,12 +18,12 @@ public class ContactController {
     private ClientManager clientManager = new ClientManager();
 
     @RequestMapping(value = resourceUrl, method = RequestMethod.GET)
-    public List<ContactInformationDto> getClientContacts(@PathVariable Integer id) {
+    public List<ContactDto> getClientContacts(@PathVariable Integer id) {
         return clientManager.getClientContacts(id);
     }
 
     @RequestMapping(value = resourceUrl, method = RequestMethod.POST)
-    public void addContacts(@RequestBody List<ContactInformationDto> contacts, @PathVariable Integer id) {
+    public void addContacts(@RequestBody List<ContactDto> contacts, @PathVariable Integer id) {
         clientManager.addContacts(contacts, id);
     }
 }

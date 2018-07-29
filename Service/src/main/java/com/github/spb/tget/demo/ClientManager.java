@@ -5,7 +5,7 @@ import com.github.spb.tget.demo.dao.ClientDao;
 import com.github.spb.tget.demo.dao.ContactDao;
 import com.github.spb.tget.demo.data.ClientEntity;
 import com.github.spb.tget.demo.dto.ClientDto;
-import com.github.spb.tget.demo.dto.ContactInformationDto;
+import com.github.spb.tget.demo.dto.ContactDto;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -31,7 +31,7 @@ public class ClientManager {
         return clientConverter.toDto(targetClient);
     }
 
-    public List<ContactInformationDto> getClientContacts(Integer id) {
+    public List<ContactDto> getClientContacts(Integer id) {
         return clientConverter.toDto(clientDao.resolveClient(id)).getContacts();
     }
 
@@ -39,7 +39,7 @@ public class ClientManager {
         return clientConverter.toDto(clientDao.createClient(clientConverter.fromDto(client)));
     }
 
-    public void addContacts(List<ContactInformationDto> contacts, Integer id) {
+    public void addContacts(List<ContactDto> contacts, Integer id) {
         ClientEntity client = clientDao.resolveClient(id);
         contactDao.addContacts(contacts.stream().map(c -> clientConverter.contactInfoFromDto(c))
                 .collect(Collectors.toList()), client);
