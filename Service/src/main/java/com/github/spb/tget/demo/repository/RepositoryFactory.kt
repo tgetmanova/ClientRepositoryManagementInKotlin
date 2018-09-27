@@ -12,13 +12,13 @@ class RepositoryFactory {
         fun getClientRepositoryByType(repoType: String) = when (repoType) {
             "db" -> ClientDbRepository.create()
             "inplace" -> ClientInplaceRepository()
-            else -> throw IllegalArgumentException("Unknown repository type: " + repoType)
+            else -> throw IllegalArgumentException("Unknown repository type: $repoType")
         }
 
         fun getContactInformationRepositoryByType(repoType: String) = when (repoType) {
             "db" -> ContactInformationDbRepository.create()
             "inplace" -> ContactInformationInplaceRepository()
-            else -> throw IllegalArgumentException("Unknown repository type: " + repoType)
+            else -> throw IllegalArgumentException("Unknown repository type: $repoType")
         }
     }
 }
