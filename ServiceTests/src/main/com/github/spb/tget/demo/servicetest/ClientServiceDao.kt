@@ -7,6 +7,7 @@ import com.github.spb.tget.demo.servicetest.utils.Serializer
 import io.restassured.RestAssured
 import io.restassured.RestAssured.given
 import io.restassured.http.ContentType
+import io.restassured.response.Response
 
 class ClientServiceDao {
 
@@ -30,6 +31,13 @@ class ClientServiceDao {
         return Serializer.readResponse(response)
     }
 
+    fun getClient(clientId: Int): Response {
+        return given()
+                .whenDoRequest()
+                    .get(CLIENT_ENDPOINT, clientId)
+                .thenReturn()
+    }
+
     fun createClient(client: ClientDTO): ClientDTO {
         val response =
                 given()
@@ -43,10 +51,9 @@ class ClientServiceDao {
     }
 
     fun deleteClient(id: Int?) {
-        val response =
-                given()
-                .whenDoRequest()
-                    .delete(CLIENT_ENDPOINT, id)
-                .thenReturn()
+        given()
+            .whenDoRequest()
+                .delete(CLIENT_ENDPOINT, id)
+            .thenReturn()
     }
 }

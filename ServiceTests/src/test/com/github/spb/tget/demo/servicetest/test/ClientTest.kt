@@ -3,6 +3,7 @@ package com.github.spb.tget.demo.servicetest.test
 import com.github.spb.tget.demo.servicetest.ClientServiceDao
 import com.github.spb.tget.demo.servicetest.data.ClientDTO
 import com.github.spb.tget.demo.servicetest.data.random
+import com.github.spb.tget.demo.servicetest.utils.RandomUtil
 import com.github.spb.tget.demo.servicetest.utils.ServiceDataProvider
 
 import org.testng.Assert
@@ -40,6 +41,12 @@ class ClientTest {
 
         val foundClient = dao.getClients().find { c -> c == client }
         Assert.assertNull(foundClient, "After deletion, client still can be retrieved")
+    }
+
+    @Test
+    fun resolveNonExistingClientMustThrowEntityNotFoundError() {
+        val response = dao.getClient(RandomUtil.randomInteger)
+        Assert.assertTrue(response.asString().contains("EntityNotFoundException"))
     }
 
 }

@@ -16,6 +16,9 @@ class RandomUtil {
 
         val random = Random(System.currentTimeMillis() * 10000 + TICKS_AT_EPOCH)
 
+        val randomInteger: Int
+            get() = random.nextInt()
+
         fun generateRandomString(charactersCount: Int, charactersSet: String = ALL_CHARS): String {
             val chars = charactersSet.split("")
             val stringBuilder = StringBuilder()
