@@ -23,6 +23,8 @@ class ClientManager {
     }
 
     fun getClientContacts(id: Int): List<ContactDto>? {
+        val client = clientDao.resolveClient(id)
+        client ?: throw EntityNotFoundException("Client with ID $id")
         return clientConverter.toDto(clientDao.resolveClient(id)).contacts
     }
 
