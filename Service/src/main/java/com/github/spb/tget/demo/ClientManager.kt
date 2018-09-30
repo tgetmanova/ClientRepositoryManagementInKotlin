@@ -1,9 +1,11 @@
 package com.github.spb.tget.demo
 
-import com.github.spb.tget.demo.converter.ClientConverter
 import com.github.spb.tget.demo.dao.ClientDao
 import com.github.spb.tget.demo.dao.ContactDao
+import com.github.spb.tget.demo.data.ClientEntity
+import com.github.spb.tget.demo.data.ContactEntity
 import com.github.spb.tget.demo.data.EntityNotFoundException
+import com.github.spb.tget.demo.data.toDto
 import com.github.spb.tget.demo.dto.ClientDto
 import com.github.spb.tget.demo.dto.ContactDto
 
@@ -11,30 +13,29 @@ class ClientManager {
 
     private val clientDao = ClientDao()
     private val contactDao = ContactDao()
-    private val clientConverter = ClientConverter()
 
     fun getClients(): List<ClientDto> {
-        return clientDao.getClients().map { it -> clientConverter.toDto(it) }
+        return clientDao.getClients().map { it -> it.toDto() }
     }
 
     fun getClient(id: Int): ClientDto {
         val targetClient = clientDao.resolveClient(id) ?: throw EntityNotFoundException("Client ID $id")
-        return clientConverter.toDto(targetClient)
+        return targetClient.toDto()
     }
 
     fun getClientContacts(id: Int): List<ContactDto>? {
         val client = clientDao.resolveClient(id)
         client ?: throw EntityNotFoundException("Client with ID $id")
-        return clientConverter.toDto(clientDao.resolveClient(id)).contacts
+        return clientDao.resolveClient(id)?.toDto()?.contacts
     }
 
     fun createClient(client: ClientDto): ClientDto {
-        return clientConverter.toDto(clientDao.createClient(clientConverter.fromDto(client)))
+        return clientDao.createClient(ClientEntity.fromDto(client)).toDto()
     }
 
     fun addContacts(contacts: List<ContactDto>, id: Int) {
         val client = clientDao.resolveClient(id) ?: throw EntityNotFoundException("Client ID $id")
-        contactDao.addContacts(contacts.map { it -> clientConverter.contactInfoFromDto(it) }, client)
+        contactDao.addContacts(contacts.map { it -> ContactEntity.fromDto(it) }, client)
     }
 
     fun deleteClient(id: Int) {
@@ -45,6 +46,6 @@ class ClientManager {
     fun updateClient(id: Int, clientDto: ClientDto) {
         clientDao.resolveClient(id) ?: throw EntityNotFoundException("Client ID $id")
         clientDto.id = id
-        clientDao.updateClient(clientConverter.fromDto(clientDto))
+        clientDao.updateClient(ClientEntity.fromDto(clientDto))
     }
 }
