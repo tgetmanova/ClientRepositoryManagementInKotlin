@@ -10,22 +10,21 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestMethod
 import org.springframework.web.bind.annotation.RestController
 
-const val resourceUrl = "/clients/{id}/contacts"
 
 @RestController
 class ContactController {
 
     private val clientManager = ClientManager()
 
-    @RequestMapping(resourceUrl, method = [(RequestMethod.GET)])
+    @RequestMapping(CLIENT_CONTACTS_ENDPOINT, method = [(RequestMethod.GET)])
     fun getClientContacts(@PathVariable id: Int?): List<ContactDto>? {
         id ?: throw InvalidInputException("ClientID")
         if (id <= 0) throw InvalidInputException("ClientID")
         return clientManager.getClientContacts(id )
     }
 
-    @RequestMapping(resourceUrl, method = [(RequestMethod.POST)])
+    @RequestMapping(CLIENT_CONTACTS_ENDPOINT, method = [(RequestMethod.POST)])
     fun addContacts(@RequestBody contacts: List<ContactDto>, @PathVariable id: Int?) {
-        clientManager.addContacts(contacts, id ?: throw IllegalArgumentException("Incorrect ClientID"))
+        clientManager.addContacts(contacts, id ?: throw InvalidInputException("ClientID"))
     }
 }

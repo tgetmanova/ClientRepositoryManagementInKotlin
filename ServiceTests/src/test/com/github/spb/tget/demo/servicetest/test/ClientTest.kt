@@ -7,7 +7,6 @@ import com.github.spb.tget.demo.servicetest.utils.RandomUtil
 import com.github.spb.tget.demo.servicetest.utils.ServiceDataProvider
 
 import org.testng.Assert
-
 import org.testng.annotations.Test
 
 class ClientTest {
@@ -45,8 +44,9 @@ class ClientTest {
 
     @Test
     fun resolveNonExistingClientMustThrowEntityNotFoundError() {
-        val response = dao.getClient(RandomUtil.randomInteger)
-        Assert.assertTrue(response.asString().contains("EntityNotFoundException"))
+        val randomId = RandomUtil.randomInteger;
+        val response = dao.getClient(randomId)
+        Assert.assertTrue(response.asString().contains("Entity: Client ID $randomId is not found"))
     }
 
 }
