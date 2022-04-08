@@ -7,6 +7,7 @@ import com.github.spb.tget.demo.repository.RepositoryFactory
 import com.github.spb.tget.demo.repository.inplaceRepository.InplaceRepository
 
 import java.util.HashSet
+import java.util.UUID
 
 class ClientDao {
 
@@ -46,6 +47,7 @@ class ClientDao {
     }
 
     fun createClient(client: ClientEntity): ClientEntity {
+        client.internalId = UUID.randomUUID()
         val clientId = this.clientRepository.addItemAndGetId(client)
         client.clientId = clientId
 

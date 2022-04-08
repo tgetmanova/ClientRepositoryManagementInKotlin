@@ -21,6 +21,9 @@ class RandomUtils {
         val randomInteger: Int
             get() = random.nextInt()
 
+        val randomPositiveInteger: Int
+            get() = (0..Int.MAX_VALUE).random()
+
         val randomEmailAddress: String
             get() = String.format("%s@%s.test",
                     getRandomAlpanumeric(15), getRandomAlpanumeric(10))

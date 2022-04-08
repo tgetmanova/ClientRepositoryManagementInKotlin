@@ -2,6 +2,7 @@ package com.github.spb.tget.demo
 
 import com.github.spb.tget.demo.dao.ClientDao
 import com.github.spb.tget.demo.dao.ContactDao
+import com.github.spb.tget.demo.data.AlreadyExistsException
 import com.github.spb.tget.demo.data.ClientEntity
 import com.github.spb.tget.demo.data.ContactEntity
 import com.github.spb.tget.demo.data.EntityNotFoundException
@@ -30,12 +31,23 @@ class ClientManager {
     }
 
     fun createClient(client: ClientDto): ClientDto {
+        if (clientDao.getClients().firstOrNull { it.clientId == client.id } != null) {
+            throw AlreadyExistsException("Client with Id ${client.id} already exists")
+        }
         return clientDao.createClient(ClientEntity.fromDto(client)).toDto()
     }
 
     fun addContacts(contacts: List<ContactDto>, id: Int) {
         val client = clientDao.resolveClient(id) ?: throw EntityNotFoundException("Client ID $id")
+        if (contacts.any { contact ->
+            contactDao.getAllContacts().any { it.email?.equals(contact.emailAddress, ignoreCase = true) == true }
+        }) {
+            throw AlreadyExistsException("")
+        }
+
         contactDao.addContacts(contacts.map { it -> ContactEntity.fromDto(it) }, client)
+        client.contactInformation?.addAll(contacts.map { it -> ContactEntity.fromDto(it) });
+        clientDao.updateClient(client)
     }
 
     fun deleteClient(id: Int) {

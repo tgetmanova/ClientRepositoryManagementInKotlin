@@ -4,6 +4,7 @@ import com.github.spb.tget.demo.dto.AddressDto
 import com.github.spb.tget.demo.dto.ContactDto
 import com.github.spb.tget.demo.dto.PhoneDto
 import com.github.spb.tget.demo.util.RandomUtils
+import com.github.spb.tget.demo.util.RandomUtils.Companion.randomPositiveInteger
 import com.github.spb.tget.demo.util.getSubstringBetweenOrToEnd
 import org.apache.commons.lang3.StringUtils
 
@@ -41,6 +42,7 @@ class ContactEntity {
 
         fun random(): ContactEntity {
             return ContactEntity().apply {
+                contactId = randomPositiveInteger
                 address = "Country: ${RandomUtils.getRandomAlphabetic(10)}; " +
                         "State: ${RandomUtils.getRandomAlphabetic(10)}; " +
                         "Street address: ${RandomUtils.getRandomString(60)}; " +
@@ -56,6 +58,7 @@ class ContactEntity {
             val contactInfo = ContactEntity()
 
             contactInfo.email = contactDto.emailAddress
+            contactInfo.contactId = contactDto.id!!
 
             if (contactDto.phone != null) {
                 var phone = String.format("+%d-%s",
@@ -94,6 +97,7 @@ class ContactEntity {
 fun ContactEntity.toDto(): ContactDto {
     val contactDto = ContactDto()
     contactDto.emailAddress = this.email
+    contactDto.id = this.contactId
 
     val addressDto = AddressDto()
     addressDto.country = this.address?.getSubstringBetweenOrToEnd("Country: ", ";")

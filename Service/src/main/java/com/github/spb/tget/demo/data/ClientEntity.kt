@@ -9,9 +9,11 @@ import org.apache.commons.lang3.StringUtils
 import java.sql.Date
 import java.util.ArrayList
 import java.util.HashSet
+import java.util.UUID
 
 class ClientEntity {
 
+    var internalId: UUID? = null
     var clientId: Int = 0
     var firstName: String? = null
     var lastName: String? = null
@@ -57,6 +59,7 @@ class ClientEntity {
                 lastName = RandomUtils.getRandomAlphabetic(15)
                 middleName = RandomUtils.getRandomAlphabetic(15)
                 dateOfBirth = Date.valueOf(RandomUtils.randomDateOfBirthAsAdult().toLocalDate())
+                clientId = RandomUtils.randomPositiveInteger
             }
         }
 
@@ -67,6 +70,7 @@ class ClientEntity {
             client.lastName = clientDto.lastName
             client.middleName = clientDto.middleName
             client.dateOfBirth = Date.valueOf(clientDto.dateOfBirth!!.toLocalDate().toString())
+            client.internalId = clientDto.internalId
 
             val contactInfoSet = HashSet<ContactEntity>()
             if (clientDto.contacts != null && !clientDto.contacts!!.isEmpty()) {
@@ -89,6 +93,7 @@ fun ClientEntity.toDto(): ClientDto {
     val clientDto = ClientDto()
 
     clientDto.id = this.clientId
+    clientDto.internalId = this.internalId
     clientDto.firstName = this.firstName
     clientDto.lastName = this.lastName
     clientDto.middleName = this.middleName

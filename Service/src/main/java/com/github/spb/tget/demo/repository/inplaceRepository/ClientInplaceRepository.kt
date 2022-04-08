@@ -1,7 +1,7 @@
 package com.github.spb.tget.demo.repository.inplaceRepository
 
 import com.github.spb.tget.demo.data.ClientEntity
-import com.github.spb.tget.demo.util.RandomUtils
+import com.github.spb.tget.demo.repository.InplaceDataInitializer
 
 class ClientInplaceRepository : InplaceRepository<ClientEntity> {
 
@@ -10,16 +10,7 @@ class ClientInplaceRepository : InplaceRepository<ClientEntity> {
     }
 
     init {
-        clientsList = initClientsList()
-    }
-
-    private fun initClientsList(): MutableList<ClientEntity> {
-        val clients = mutableListOf(
-                ClientEntity.random().withRandomContactInformation(),
-                ClientEntity.random().withRandomContactInformation(),
-                ClientEntity.random().withRandomContactInformation())
-        clients.forEach { client -> client.clientId = RandomUtils.randomInteger }
-        return clients
+        clientsList = InplaceDataInitializer.clientsList
     }
 
     override fun getItems(): MutableList<ClientEntity> {

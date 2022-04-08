@@ -1,23 +1,17 @@
 package com.github.spb.tget.demo.repository.inplaceRepository
 
 import com.github.spb.tget.demo.data.ContactEntity
-import com.github.spb.tget.demo.util.RandomUtils
+import com.github.spb.tget.demo.repository.InplaceDataInitializer
 
 class ContactInformationInplaceRepository : InplaceRepository<ContactEntity> {
 
     companion object {
-        @JvmStatic lateinit var contactsList : MutableList<ContactEntity>
+        @JvmStatic
+        lateinit var contactsList: MutableList<ContactEntity>
     }
 
     init {
-        contactsList = initContactList()
-    }
-
-    private fun initContactList(): MutableList<ContactEntity> {
-        val contacts = mutableListOf(
-                ContactEntity.random(), ContactEntity.random(), ContactEntity.random())
-        contacts.forEach { contact -> contact.contactId = RandomUtils.randomInteger }
-        return contacts
+        contactsList = InplaceDataInitializer.contactsList
     }
 
     override fun getItems(): MutableList<ContactEntity> {
@@ -35,7 +29,7 @@ class ContactInformationInplaceRepository : InplaceRepository<ContactEntity> {
 
     override fun updateItem(item: ContactEntity) {
         val contactToUpdate = contactsList.find { it -> it.contactId == item.contactId }
-                ?: throw IllegalStateException("Contact with ID ${item.contactId} cannot be found")
+            ?: throw IllegalStateException("Contact with ID ${item.contactId} cannot be found")
         contactToUpdate.apply {
             email = item.email
             phone = item.phone
@@ -45,7 +39,7 @@ class ContactInformationInplaceRepository : InplaceRepository<ContactEntity> {
 
     override fun deleteItem(item: ContactEntity) {
         val contactToDelete = contactsList.find { it -> it.contactId == item.contactId }
-                ?: throw IllegalStateException("Contact with ID ${item.contactId} cannot be found")
+            ?: throw IllegalStateException("Contact with ID ${item.contactId} cannot be found")
         contactsList.remove(contactToDelete)
     }
 
